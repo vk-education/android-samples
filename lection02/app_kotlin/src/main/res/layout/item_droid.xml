@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/item"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/person_item_height"
+
+    android:background="@color/droid_item_background"
+
+    tools:context=".MainActivity"
+    >
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="@dimen/person_image_size"
+        android:layout_height="match_parent"
+
+        tools:src="@color/color_black"
+        />
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@id/image"
+
+        android:gravity="center_vertical"
+        android:padding="8dp"
+
+        tools:text="Random Name"
+        />
+</RelativeLayout>
