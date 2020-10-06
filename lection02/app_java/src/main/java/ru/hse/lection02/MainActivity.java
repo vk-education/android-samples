@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Класс для отслеживания клика по элементу
-        final PersonViewHolder.IListener stateToggler = new PersonViewHolder.IListener() {
+        final DroidViewHolder.IListener stateToggler = new DroidViewHolder.IListener() {
             @Override
             public void onDroidClicked(int position) {
 
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         public int state;
     }
 
-    static class PersonViewHolder extends RecyclerView.ViewHolder {
+    static class DroidViewHolder extends RecyclerView.ViewHolder {
         public interface IListener {
             void onDroidClicked(int position);
         }
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         protected final ImageView mImage;
 
 
-        public PersonViewHolder(View itemView, IListener listener) {
+        public DroidViewHolder(View itemView, IListener listener) {
             super(itemView);
 
             mListener = listener;
@@ -155,12 +155,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    static class DroidAdapter extends RecyclerView.Adapter<PersonViewHolder> {
-        protected final PersonViewHolder.IListener mListener;
+    static class DroidAdapter extends RecyclerView.Adapter<DroidViewHolder> {
+        protected final DroidViewHolder.IListener mListener;
         protected final List<Droid> mData;
 
 
-        public DroidAdapter(List<Droid> data, PersonViewHolder.IListener listener) {
+        public DroidAdapter(List<Droid> data, DroidViewHolder.IListener listener) {
             mListener = listener;
             mData = data;
         }
@@ -169,19 +169,19 @@ public class MainActivity extends AppCompatActivity {
         // Инициализируем ViewHolder
         @NonNull
         @Override
-        public PersonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public DroidViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
             // Получаем инфлейтер и создаем нужный layout
             final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             final View layout = inflater.inflate(R.layout.item_droid, parent, false);
 
             // Создаем ViewHolder
-            return new PersonViewHolder(layout, mListener);
+            return new DroidViewHolder(layout, mListener);
         }
 
         // Вставляем данные во ViewHolder
         @Override
-        public void onBindViewHolder(@NonNull PersonViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull DroidViewHolder holder, int position) {
             final Droid item = mData.get(position);
 
             holder.bind(item);

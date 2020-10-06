@@ -5,7 +5,7 @@
 
     android:id="@+id/item"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/person_item_height"
+    android:layout_height="@dimen/droid_item_height"
 
     android:background="@color/droid_item_background"
 
@@ -13,7 +13,7 @@
     >
     <ImageView
         android:id="@+id/image"
-        android:layout_width="@dimen/person_image_size"
+        android:layout_width="@dimen/droid_image_size"
         android:layout_height="match_parent"
 
         tools:src="@color/color_black"

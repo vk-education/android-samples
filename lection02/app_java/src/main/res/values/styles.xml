@@ -8,6 +8,6 @@
     </style>
 
 
-    <dimen name="person_item_height">48dp</dimen>
-    <dimen name="person_image_size">48dp</dimen>
+    <dimen name="droid_item_height">48dp</dimen>
+    <dimen name="droid_image_size">48dp</dimen>
 </resources>

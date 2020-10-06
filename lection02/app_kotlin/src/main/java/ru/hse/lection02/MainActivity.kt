@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
 
         // Класс для отслеживания клика по элементу
-        val stateToggler = object: PersonViewHolder.IListener {
+        val stateToggler = object: DroidViewHolder.IListener {
             override fun onDroidClicked(position: Int) {
 
                 // Изменяем состояние дроида
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    class PersonViewHolder(itemView: View, val listener: IListener): RecyclerView.ViewHolder(itemView) {
+    class DroidViewHolder(itemView: View, val listener: IListener): RecyclerView.ViewHolder(itemView) {
         interface IListener {
             fun onDroidClicked(position: Int)
         }
@@ -132,20 +132,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    class DroidAdapter(val data: List<Droid>, val listener: PersonViewHolder.IListener): RecyclerView.Adapter<PersonViewHolder>() {
+    class DroidAdapter(val data: List<Droid>, val listener: DroidViewHolder.IListener): RecyclerView.Adapter<DroidViewHolder>() {
         // Инициализируем ViewHolder
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonViewHolder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DroidViewHolder {
 
             // Получаем инфлейтер и создаем нужный layout
             val inflater = LayoutInflater.from(parent.context)
             val layout = inflater.inflate(R.layout.item_droid, parent, false)
 
             // Создаем ViewHolder
-            return PersonViewHolder(layout, listener)
+            return DroidViewHolder(layout, listener)
         }
 
         // Вставляем данные во ViewHolder
-        override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: DroidViewHolder, position: Int) {
             val item = data[position]
 
             holder.bind(item)
