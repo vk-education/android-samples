@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="300dp"
+    android:minWidth="200dp"
+
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/droid_item_background"
+
+    tools:context=".presentationlayer.MainActivity">
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="100dp"
+        android:layout_height="56dp"
+
+        android:gravity="center"
+
+        tools:text="RandomName"
+        />
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+
+        android:text="@string/caption_droid_state"
+        />
+    <TextView
+        android:id="@+id/state"
+        android:layout_width="100dp"
+        android:layout_height="56dp"
+
+        android:gravity="center"
+
+        tools:text="@string/caption_droid_state_unknown"
+        />
+</androidx.appcompat.widget.LinearLayoutCompat>

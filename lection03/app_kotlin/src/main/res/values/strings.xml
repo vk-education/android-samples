@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">lection03</string>
+
+    <string name="caption_droid_state">State</string>
+    <string name="caption_droid_state_removed">REMOVED</string>
+    <string name="caption_droid_state_new">NEW</string>
+    <string name="caption_droid_state_unknown">UNKNOWN</string>
+</resources>
