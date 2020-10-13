@@ -3,7 +3,7 @@ package ru.hse.lection03.businesslayer
 import ru.hse.lection03.objects.Droid
 import java.util.*
 
-class DroidRepository {
+class DroidRepository private constructor() {
     companion object {
         // Константы
         const val DATA_SIZE = 100
@@ -22,7 +22,7 @@ class DroidRepository {
 
 
     // получить список Дроидов
-    fun list()= droidList
+    fun list() = droidList
 
     // получить дроида по индексу
     fun item(index: Int) = droidList[index]

@@ -15,7 +15,7 @@ public class DroidRepository {
     public static final Random RANOMIZER = new Random();
 
 
-    // Щбъекты для реализации хардкорного синглтона в java
+    // Объекты для реализации хардкорного синглтона в java
     private static volatile DroidRepository mInstance;
 
     public static DroidRepository getInstance() {
