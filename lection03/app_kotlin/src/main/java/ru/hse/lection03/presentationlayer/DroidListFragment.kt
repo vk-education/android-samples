@@ -1,5 +1,6 @@
 package ru.hse.lection03.presentationlayer
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,27 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.hse.lection03.R
 import ru.hse.lection03.businesslayer.DroidRepository
+import ru.hse.lection03.objects.Droid
 import ru.hse.lection03.presentationlayer.adapter.DroidAdapter
 import ru.hse.lection03.presentationlayer.adapter.DroidViewHolder
 
 class DroidListFragment : Fragment() {
+    // Вариант кода, для общения с activity без Intent
+    interface IListener {
+        fun onDroidClicked(droid: Droid)
+    }
+
+
+    // Вариант кода, для общения с activity без Intent
+    protected var listener: IListener? = null
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        listener = requireActivity() as? IListener
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // устанавливаем верстку
         return inflater.inflate(
@@ -35,6 +53,12 @@ class DroidListFragment : Fragment() {
         }
     }
 
+    override fun onDetach() {
+        super.onDetach()
+
+        listener = null
+    }
+
 
     // Одна из возможных реализаций отслеживания клика по элементу
     // обработчик клика по элементу
@@ -42,8 +66,12 @@ class DroidListFragment : Fragment() {
         override fun onDroidClicked(position: Int) {
             val droid = DroidRepository.instance.item(position)
 
-            val intent = MainActivity.droidDetailsIntent(requireContext(), droid)
-            startActivity(intent)
+            // Вариант кода, для общения с activity без Intent
+            listener?.onDroidClicked(droid)
+
+            // Вариант кода, для android:launchMode="singleInstance"
+//            val intent = MainActivity.droidDetailsIntent(requireContext(), droid)
+//            startActivity(intent)
         }
     }
 }

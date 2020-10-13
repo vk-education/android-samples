@@ -8,19 +8,19 @@ import ru.hse.lection03.R
 import ru.hse.lection03.businesslayer.DroidRepository
 import ru.hse.lection03.objects.Droid
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DroidListFragment.IListener {
     companion object {
         const val EXTRAS_DROID = "DROID"
 
-        const val TAG_LIST = "LIST"
         const val TAG_DETAILS = "DETAILS"
         const val TAG_DETAILS_DIALOG = "DETAILS_DIALOG"
 
         const val DEFAULT_DROID_INDEX = 0
 
 
-        fun droidDetailsIntent(context: Context, droid: Droid) = Intent(context, MainActivity::class.java)
-                .putExtra(EXTRAS_DROID, droid)
+        // Вариант кода, для android:launchMode="singleInstance"
+//        fun droidDetailsIntent(context: Context, droid: Droid) = Intent(context, MainActivity::class.java)
+//                .putExtra(EXTRAS_DROID, droid)
     }
 
 
@@ -36,14 +36,6 @@ class MainActivity : AppCompatActivity() {
         // Проверяем что эта Activity не имеет сохраненного стейта и вставляем свой фрагмент
         // Если стейт есть, тогда фрагмент будет восстановлен без нашего участия
         if (savedInstanceState == null) {
-
-            // Устанавливаем фрагмент со списком
-            supportFragmentManager
-                    .beginTransaction()                             // начинаем транзакцию
-                    .add(R.id.data, DroidListFragment(), TAG_LIST)  // добавляем франмент со списком
-                    .commit()                                       // совершаем транзакцию
-
-
             if (isDual) {
                 // У нас двухпанельный режим, устанавливаем детали по дефолту
                 val droid = DroidRepository.instance.item(DEFAULT_DROID_INDEX)
@@ -61,7 +53,14 @@ class MainActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
 
-        val droid = intent.getSerializableExtra(EXTRAS_DROID) as? Droid
+        // Вариант кода, для android:launchMode="singleInstance"
+//        val droid = intent.getSerializableExtra(EXTRAS_DROID) as? Droid
+//        showDetails(droid)
+    }
+
+
+    // Вариант кода, для общения с activity без Intent
+    override fun onDroidClicked(droid: Droid) {
         showDetails(droid)
     }
 

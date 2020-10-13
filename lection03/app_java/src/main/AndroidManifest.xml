@@ -12,7 +12,6 @@
         >
         <activity
             android:name=".presentationlayer.MainActivity"
-            android:launchMode="singleInstance"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

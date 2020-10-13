@@ -11,8 +11,9 @@
 
     tools:context=".presentationlayer.MainActivity"
     >
-    <FrameLayout
+    <fragment
         android:id="@+id/data"
+        android:name="ru.hse.lection03.presentationlayer.DroidListFragment"
 
         android:layout_weight="1"
         android:layout_width="0dp"

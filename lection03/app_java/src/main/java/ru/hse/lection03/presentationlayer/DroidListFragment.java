@@ -1,5 +1,6 @@
 package ru.hse.lection03.presentationlayer;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +20,25 @@ import ru.hse.lection03.presentationlayer.adapter.DroidAdapter;
 import ru.hse.lection03.presentationlayer.adapter.DroidViewHolder;
 
 public class DroidListFragment extends Fragment {
+    // Вариант кода, для общения с activity без Intent
+    public interface IListener {
+        public void onDroidClicked(Droid droid);
+    }
+
+
+    // Вариант кода, для общения с activity без Intent
+    protected IListener mListener;
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        if (requireActivity() instanceof IListener) {
+            mListener = (IListener) requireActivity();
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,6 +63,13 @@ public class DroidListFragment extends Fragment {
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        mListener = null;
+    }
+
 
     // Одна из возможных реализаций отслеживания клика по элементу
     // обработчик клика по элементу
@@ -51,13 +78,15 @@ public class DroidListFragment extends Fragment {
         public void onDroidClicked(int position) {
             final Droid droid = DroidRepository.getInstance().item(position);
 
-            final Intent intent = MainActivity.droidDetailsIntent(requireContext(), droid);
-            startActivity(intent);
+
+            // Вариант кода, для общения с activity без Intent
+            if (mListener != null) {
+                mListener.onDroidClicked(droid);
+            }
+
+            // Вариант кода, для android:launchMode="singleInstance"
+//            final Intent intent = MainActivity.droidDetailsIntent(requireContext(), droid);
+//            startActivity(intent);
         }
     }
-
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-
-//    }
 }
