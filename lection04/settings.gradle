@@ -1,0 +1,3 @@
+include ':app_kotlin'
+include ':app_java'
+rootProject.name = "lection04"

@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">lection04</string>
+
+    <string name="app_channel_connectivity">Трекер соединения</string>
+
+    <string name="caption_service_notification_ticker">Трекер соединения</string>
+    <string name="caption_service_notification_title">Трекер соединения</string>
+    <string name="caption_service_notification_description">В фоне следим за тем, как меняется информация по соединению</string>
+
+    <string name="caption_connectivity">Подключение к сети</string>
+    <string name="caption_connectivity_track">Следить за состоянием</string>
+</resources>

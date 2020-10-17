@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ru.hse.lection04"
+    >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+
+    <!-- Приложение, указан свой Application-класс -->
+    <application
+        android:name=".ConnectivityApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        >
+
+
+        <!-- Activity, только портретный режим, единичный экземпляр -->
+        <activity
+            android:name=".presentationlayer.MainActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <!-- Service для работы в фоне, в параллельном процессе -->
+        <service
+            android:name=".presentationlayer.ConnectivityService"
+            android:process=":parallel"
+            android:description="@string/caption_service_notification_description"
+            android:label="@string/caption_service_notification_title"
+            />
+
+
+        <!-- ContentProvider для обертки хранения и предоставления данных -->
+        <provider
+            android:authorities="ru.hse.lection04.log"
+            android:name=".datalayer.LogDataAccessor"
+            android:exported="true"
+            >
+
+        </provider>
+
+
+        <!-- Ресивер для получения уведомления, когда девайс загрузился -->
+        <receiver
+            android:name=".presentationlayer.BootReceiver"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <!-- Обычно у многих производителей окончание загрузки устройства отправляется эта рассылка -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <!-- Но! Иногда, вместо настоящей перезагрузки устрйоства, вендоры используют quickboot. Например, так делал HTC -->
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
