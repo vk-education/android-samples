@@ -13,20 +13,20 @@ import ru.hse.lection03.R;
 import ru.hse.lection03.businesslayer.DroidRepository;
 import ru.hse.lection03.objects.Droid;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DroidListFragment.IListener {
     protected static final String EXTRAS_DROID = "DROID";
 
-    protected static final String TAG_LIST = "LIST";
     protected static final String TAG_DETAILS = "DETAILS";
     protected static final String TAG_DETAILS_DIALOG = "TAG_DETAILS_DIALOG";
 
     protected static final int DEFAULT_DROID_INDEX = 0;
 
 
-    public static Intent droidDetailsIntent(Context context, Droid droid) {
-        return new Intent(context, MainActivity.class)
-                .putExtra(EXTRAS_DROID, droid);
-    }
+    // Вариант кода, для android:launchMode="singleInstance"
+//    public static Intent droidDetailsIntent(Context context, Droid droid) {
+//        return new Intent(context, MainActivity.class)
+//                .putExtra(EXTRAS_DROID, droid);
+//    }
 
 
     @Override
@@ -41,14 +41,6 @@ public class MainActivity extends AppCompatActivity {
         // Проверяем что эта Activity не имеет сохраненного стейта и вставляем свой фрагмент
         // Если стейт есть, тогда фрагмент будет восстановлен без нашего участия
         if (savedInstanceState == null) {
-
-            // Устанавливаем фрагмент со списком
-            getSupportFragmentManager()
-                    .beginTransaction()                                 // начинаем транзакцию
-                    .add(R.id.data, new DroidListFragment(), TAG_LIST)  // добавляем франмент со списком
-                    .commit();                                          // совершаем транзакцию
-
-
             if (isDual) {
                 final Droid droid = DroidRepository.getInstance().item(DEFAULT_DROID_INDEX);
                 showDetails(droid);
@@ -61,15 +53,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // Activity имеет специальный флаг в Manifest launchMode="singleInstance", поэтому startActivity пришел сюда
+    // Activity имеет специальный флаг в Manifest android:launchMode="singleInstance", поэтому startActivity пришел сюда
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        final Serializable droid = intent.getSerializableExtra(EXTRAS_DROID);
-        if (droid instanceof Droid) {
-            showDetails((Droid) droid);
-        }
+        // Вариант кода, для android:launchMode="singleInstance"
+//        final Serializable droid = intent.getSerializableExtra(EXTRAS_DROID);
+//        if (droid instanceof Droid) {
+//            showDetails((Droid) droid);
+//        }
+    }
+
+    // Вариант кода, для общения с activity без Intent
+    @Override
+    public void onDroidClicked(Droid droid) {
+        showDetails(droid);
     }
 
 
