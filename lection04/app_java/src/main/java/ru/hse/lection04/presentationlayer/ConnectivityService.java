@@ -20,7 +20,14 @@ import ru.hse.lection04.businesslayer.ServiceLocator;
 import ru.hse.lection04.businesslayer.connectivity.AbstractConnectivityProvider;
 import ru.hse.lection04.objects.ConnectivityInfo;
 
+
+/**
+ * Сервис для остлеживания изменения состояния соединения в фоне
+ */
 public class ConnectivityService extends Service {
+    /**
+     * Идентификатор уведомления, которое будет оторажаться в статусбаре
+     */
     protected static final int FOREGROUND_ID = 1338;
 
     protected static final String MESSAGE_CREATE = "SERVICE: CREATED";
@@ -48,10 +55,10 @@ public class ConnectivityService extends Service {
         final Notification notification = buildNotification();
         startForeground(FOREGROUND_ID, notification);
 
+        // Делаем запись в Лог о том, что сервис создан. Значит трекинг начался
+        writeLog(MESSAGE_CREATE);
 
-        final Date date = Calendar.getInstance().getTime();
-        mLogProvider.write(date, MESSAGE_CREATE);
-
+        // Подписываемся на изменение состояния подключения
         mConnectivityProvider.register(mConnectivityListener);
     }
 
@@ -59,20 +66,25 @@ public class ConnectivityService extends Service {
     public void onDestroy() {
         super.onDestroy();
 
+        // Отписываемся от получения состояния подключения
         mConnectivityProvider.unregister(mConnectivityListener);
 
-        final Date date = Calendar.getInstance().getTime();
-        mLogProvider.write(date, MESSAGE_DESTROY);
+        // Делаем запись в Лог о том, что сервис уничтожен. Значит трекинг прекратился
+        writeLog(MESSAGE_DESTROY);
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        // Один из возможных интерфейсов общения. Поскольку у нас сервис выполняет фоновую работу, байндер ему не нужен.
         return null;
     }
 
 
-    // Конструктор уведомдения
+    /**
+     * Конструктор уведомдения
+     * @return Notification с информацией о сервисе
+     */
     protected Notification buildNotification() {
         // Куда ведем, если кликнули на уведомление
         final Intent notificationIntent = new Intent(this, MainActivity.class);
@@ -91,6 +103,10 @@ public class ConnectivityService extends Service {
                 .build();
     }
 
+    /**
+     * Обрабатываем обновление подключения
+     * @param info Информация о подключении
+     */
     protected void connectivityUpdated(ConnectivityInfo info) {
         final String message;
         if (info == null) {
@@ -99,8 +115,15 @@ public class ConnectivityService extends Service {
             message = String.format(MESSAGE_CONNECTIVITY_PATTERN, info.type);
         }
 
-        final Date time = Calendar.getInstance().getTime();
+        writeLog(message);
+    }
 
+    /**
+     * Пишем в LogProvшder
+     * @param message новая запись
+     */
+    protected void writeLog(String message) {
+        final Date time = Calendar.getInstance().getTime();
         mLogProvider.write(time, message);
     }
 

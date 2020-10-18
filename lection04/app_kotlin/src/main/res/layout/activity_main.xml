@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+
+    tools:context=".presentationlayer.MainActivity"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:gravity="center_vertical"
+
+        android:text="@string/caption_connectivity"
+        android:padding="8dp"
+        />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/connectivity_track"
+
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+
+        android:text="@string/caption_connectivity_track"
+        android:padding="8dp"
+        android:checked="false"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:background="#f1f1f1"
+        />
+</androidx.appcompat.widget.LinearLayoutCompat>

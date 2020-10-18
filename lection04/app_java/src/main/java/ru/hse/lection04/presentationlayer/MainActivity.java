@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     protected final LogAdapter mLogAdapter = new LogAdapter();
 
     protected SwitchCompat mTrackConnectivity;
-    protected RecyclerView mRecycler;
 
 
     @Override
@@ -39,13 +38,15 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        // Настраиваем свитч, для изменения состояния фонового трекинга
         mTrackConnectivity = findViewById(R.id.connectivity_track);
         mTrackConnectivity.setChecked(mConnectivityProvider.isTrackEnabled());
         mTrackConnectivity.setOnCheckedChangeListener(new TrackerChangeListener());
 
-        mRecycler = findViewById(R.id.recycler);
-        mRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mRecycler.setAdapter(mLogAdapter);
+        // Настраиваем ресайклер, для отображения логов
+        final RecyclerView recycler = findViewById(R.id.recycler);
+        recycler.setLayoutManager(new LinearLayoutManager(this));
+        recycler.setAdapter(mLogAdapter);
 
     }
 
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        // Подписываемся на обновление логов
         mLogProvider.register(mLogListener);
     }
 
@@ -60,17 +62,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        // При возврате фокуса, на всякий случай, проверяем состояние трекинга
         checkAndUpdateState();
     }
 
     @Override
     protected void onStop() {
+        // Отписываемся от обновления логов
         mLogProvider.unregister(mLogListener);
 
         super.onStop();
     }
 
 
+    /**
+     * Проверить и актуализировать состояние трекинга
+     */
     protected void checkAndUpdateState() {
         if (mTrackConnectivity.isChecked() != mConnectivityProvider.isTrackEnabled()) {
             mTrackConnectivity.setChecked(mConnectivityProvider.isTrackEnabled());
@@ -79,21 +86,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    protected void updateServiceState(boolean isChecked) {
+    /**
+     * Стартануть или остановить трекинг
+     * @param value Если true - то стартануть сервис. Иначе - застопить
+     */
+    protected void updateServiceState(boolean value) {
         final Intent intent = ConnectivityService.newInstance(getApplicationContext());
 
-        if (isChecked) {
+        if (value) {
             ContextCompat.startForegroundService(getApplicationContext(), intent);
         } else {
             stopService(intent);
         }
     }
 
+    /**
+     * Вывести новый список логов
+     * @param entries список сообщений лога
+     */
     protected void updateData(List<LogEntry> entries) {
         mLogAdapter.submitList(entries);
     }
 
 
+    /**
+     * Подписчик на обновление логгера
+     */
     protected class LogListener implements LogProvider.IListener {
         @Override
         public void logUpdated(LogProvider provider, List<LogEntry> entries) {
@@ -101,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Подписчик на изменение состояние свитча
+     */
     protected class TrackerChangeListener implements CompoundButton.OnCheckedChangeListener {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

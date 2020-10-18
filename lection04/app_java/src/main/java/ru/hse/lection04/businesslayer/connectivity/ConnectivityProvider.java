@@ -11,6 +11,9 @@ import androidx.annotation.RequiresApi;
 
 import ru.hse.lection04.objects.ConnectivityInfo;
 
+/**
+ * Имплементация, для поддержания работы логики от 24 версии API
+ */
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class ConnectivityProvider extends AbstractConnectivityProvider {
     protected static final String TYPE_UNKNOWN = "UNKNOWN";
@@ -46,6 +49,10 @@ public class ConnectivityProvider extends AbstractConnectivityProvider {
     }
 
 
+    /**
+     * Обработать изменение состоянии сети
+     * @param network Полученные данные
+     */
     protected void networkChanged(Network network) {
         final ConnectivityInfo info = extractInfo(network);
 
@@ -54,6 +61,11 @@ public class ConnectivityProvider extends AbstractConnectivityProvider {
         }
     }
 
+    /**
+     * Превращаем полученные данные в наш объект
+     * @param network Полученные данные
+     * @return наш объект с ифнормацией о соединении
+     */
     protected ConnectivityInfo extractInfo(Network network) {
         final ConnectivityInfo info = new ConnectivityInfo();
 
@@ -95,7 +107,9 @@ public class ConnectivityProvider extends AbstractConnectivityProvider {
         return TYPE_UNKNOWN;
     }
 
-
+    /**
+     * Подписчик на изменение состояния покдлючения, при помощи
+     */
     protected class ConnectivityCallback extends ConnectivityManager.NetworkCallback {
         @Override
         public void onCapabilitiesChanged(@NonNull Network network, @NonNull NetworkCapabilities networkCapabilities) {

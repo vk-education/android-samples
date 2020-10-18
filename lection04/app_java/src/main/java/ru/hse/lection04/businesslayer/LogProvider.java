@@ -17,18 +17,26 @@ import java.util.Set;
 import ru.hse.lection04.datalayer.LogDataAccessor;
 import ru.hse.lection04.objects.LogEntry;
 
+/**
+ * Класс для работы с логами. Обеспечивает так же подписку на изменение данных
+ */
 public class LogProvider extends AbstractCallbackProvider<LogProvider.IListener> {
     public static final String TAG = "LogProvider";
 
     protected static final Handler HANDLER_MAIN = new Handler(Looper.getMainLooper());
     protected static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US);
 
-
+    /**
+     * Подписчик, который будет уведомляться, когда прозишли изменения данных
+     */
     public interface IListener {
         public void logUpdated(LogProvider provider, List<LogEntry> entries);
     }
 
 
+    /**
+     * Внутренний класс для остлеживания обновления ContentProvider с логами
+     */
     protected final UpdateListener mUpdateListener = new UpdateListener();
 
     protected final Context mContext;
@@ -50,6 +58,11 @@ public class LogProvider extends AbstractCallbackProvider<LogProvider.IListener>
     }
 
 
+    /**
+     * Добавить запись в лог
+     * @param time время события
+     * @param message текст события
+     */
     public void write(Date time, String message) {
         final ContentValues values = new ContentValues();
         values.put(LogDataAccessor.COLUMN_DATE, DATE_FORMATTER.format(time));
@@ -59,6 +72,10 @@ public class LogProvider extends AbstractCallbackProvider<LogProvider.IListener>
     }
 
 
+    /**
+     * Получить список логов
+     * @return Список из объектов LogEntry
+     */
     protected List<LogEntry> all() {
         final Cursor cursor = mContext.getContentResolver().query(LogDataAccessor.CONTENT_URI, null, null, null, null);
 
@@ -85,6 +102,9 @@ public class LogProvider extends AbstractCallbackProvider<LogProvider.IListener>
     }
 
 
+    /**
+     * Подписчик на изменения ContentProvider
+     */
     protected class UpdateListener extends ContentObserver {
         public UpdateListener() {
             super(null);
@@ -98,6 +118,9 @@ public class LogProvider extends AbstractCallbackProvider<LogProvider.IListener>
         }
     }
 
+    /**
+     * Класс для обновления слушателей
+     */
     protected static class ListenerNotificator implements Runnable {
         protected final LogProvider mLogProvider;
         protected final Set<IListener> mListeners;

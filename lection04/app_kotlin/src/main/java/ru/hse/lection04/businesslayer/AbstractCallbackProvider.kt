@@ -1,29 +1,28 @@
-package ru.hse.lection04.businesslayer;
+package ru.hse.lection04.businesslayer
 
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Класс, которые содержит логику для работу с подписчиками
  * @param <LISTENER> любой подписчик
  */
-public class AbstractCallbackProvider<LISTENER> {
-    protected static final int EMPTY = 0;
+open class AbstractCallbackProvider<LISTENER> {
+    companion object {
+        protected const val EMPTY = 0
+    }
 
-    protected final Set<LISTENER> mListeners = new HashSet<>();
+
+    protected val listeners = mutableSetOf<LISTENER>()
 
 
     /***
      * Зарегестрировать подписчика
      * @param listener подписчик
      */
-    public void register(LISTENER listener) {
-        final int lastSize = mListeners.size();
-
-        mListeners.add(listener);
-
+    fun register(listener: LISTENER) {
+        val lastSize = listeners.size
+        listeners.add(listener)
         if (lastSize == EMPTY) {
-            setActivation(true);
+            setActivation(true)
         }
     }
 
@@ -31,11 +30,10 @@ public class AbstractCallbackProvider<LISTENER> {
      * Удалить подписчика
      * @param listener подписчик
      */
-    public void unregister(LISTENER listener) {
-        mListeners.remove(listener);
-
-        if (mListeners.size() == EMPTY) {
-            setActivation(false);
+    fun unregister(listener: LISTENER) {
+        listeners.remove(listener)
+        if (listeners.size == EMPTY) {
+            setActivation(false)
         }
     }
 
@@ -43,7 +41,5 @@ public class AbstractCallbackProvider<LISTENER> {
      * В зависимости от изменения набора подписчиков вызовется этот метод
      * @param value true - означает что появились слушатели и можно начать процесс отслеживания даных и уведомления. false - когда список подписчиков пуст
      */
-    protected void setActivation(boolean value) {
-
-    }
+    protected open fun setActivation(value: Boolean) {}
 }

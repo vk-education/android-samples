@@ -9,6 +9,10 @@ import androidx.core.content.ContextCompat;
 import ru.hse.lection04.businesslayer.ServiceLocator;
 import ru.hse.lection04.businesslayer.connectivity.AbstractConnectivityProvider;
 
+/**
+ * Получаем уведомление о том, что система загружена.
+ * Если надо - запускаме сервис для трекинга.
+ */
 public class BootReceiver extends BroadcastReceiver {
     protected final AbstractConnectivityProvider mConnectivityProvider = ServiceLocator.getConnectivityProvider();
 

@@ -18,6 +18,10 @@ import androidx.annotation.Nullable;
 
 import java.util.HashMap;
 
+
+/**
+ * Класс для работает с логом
+ */
 public class LogDataAccessor extends ContentProvider {
     public static final String AUTHORITY = "ru.hse.lection04.log";
     public static final String CONTENT_PATH = "entry";
@@ -62,7 +66,7 @@ public class LogDataAccessor extends ContentProvider {
             return false;
         }
 
-        // Уведоиляем, что провайдер может работать. Иначе запуск приложения будет остановлен
+        // Уведоимяем, что провайдер может работать. Иначе запуск приложения будет остановлен
         return true;
     }
 
@@ -88,7 +92,9 @@ public class LogDataAccessor extends ContentProvider {
 
         if (rowID > 0) {
             final Uri newUri = ContentUris.withAppendedId(CONTENT_URI, rowID);
-            getContext().getContentResolver().notifyChange(newUri, null);
+
+            dataUpdated(newUri);
+
             return newUri;
         }
 
@@ -113,7 +119,8 @@ public class LogDataAccessor extends ContentProvider {
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
 
-        getContext().getContentResolver().notifyChange(uri, null);
+        dataUpdated(uri);
+
         return count;
     }
 
@@ -134,7 +141,8 @@ public class LogDataAccessor extends ContentProvider {
                 throw new IllegalArgumentException("Unknown URI " + uri );
         }
 
-        getContext().getContentResolver().notifyChange(uri, null);
+        dataUpdated(uri);
+
         return count;
     }
 
@@ -157,14 +165,31 @@ public class LogDataAccessor extends ContentProvider {
                 throw new IllegalArgumentException("Unknown URI " + uri );
         }
 
-        if (sortOrder == null || sortOrder == "") {
+        if (sortOrder == null || sortOrder.isEmpty()) {
             sortOrder = COLUMN_DATE;
         }
 
         final Cursor cursor = builder.query(mDatabase, projection,	selection, selectionArgs,null, null, sortOrder);
-        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        if (getContext() != null) {
+            cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        }
+
 
         return cursor;
+    }
+
+
+    /**
+     * Уведомляе систему о том, что даныне изменились
+     * @param uri адрес измененных данных
+     */
+    protected void dataUpdated(Uri uri) {
+        final Context context = getContext();
+        if (context == null) {
+            return;
+        }
+
+        context.getContentResolver().notifyChange(uri, null);
     }
 
 
