@@ -83,7 +83,11 @@ public class ConnectivityProvider extends AbstractConnectivityProvider {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI_AWARE)) {
                 return TRANSPORT_NAMES[NetworkCapabilities.TRANSPORT_WIFI_AWARE];
-            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_LOWPAN)) {
+            }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_LOWPAN)) {
                 return TRANSPORT_NAMES[NetworkCapabilities.TRANSPORT_LOWPAN];
             }
         }

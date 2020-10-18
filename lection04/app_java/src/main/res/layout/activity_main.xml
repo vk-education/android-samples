@@ -30,5 +30,12 @@
         android:padding="8dp"
         android:checked="false"
         />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:background="#f1f1f1"
+        />
 </androidx.appcompat.widget.LinearLayoutCompat>

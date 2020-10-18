@@ -7,6 +7,8 @@ import android.widget.CompoundButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
@@ -15,6 +17,7 @@ import ru.hse.lection04.businesslayer.LogProvider;
 import ru.hse.lection04.businesslayer.ServiceLocator;
 import ru.hse.lection04.businesslayer.connectivity.AbstractConnectivityProvider;
 import ru.hse.lection04.objects.LogEntry;
+import ru.hse.lection04.presentationlayer.adapter.LogAdapter;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
@@ -24,8 +27,10 @@ public class MainActivity extends AppCompatActivity {
     protected LogProvider mLogProvider = ServiceLocator.getLogProvider();
 
     protected final LogListener mLogListener = new LogListener();
+    protected final LogAdapter mLogAdapter = new LogAdapter();
 
     protected SwitchCompat mTrackConnectivity;
+    protected RecyclerView mRecycler;
 
 
     @Override
@@ -37,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
         mTrackConnectivity = findViewById(R.id.connectivity_track);
         mTrackConnectivity.setChecked(mConnectivityProvider.isTrackEnabled());
         mTrackConnectivity.setOnCheckedChangeListener(new TrackerChangeListener());
+
+        mRecycler = findViewById(R.id.recycler);
+        mRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mRecycler.setAdapter(mLogAdapter);
+
     }
 
     @Override
@@ -79,11 +89,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    protected void updateData(List<LogEntry> entries) {
+        mLogAdapter.submitList(entries);
+    }
+
 
     protected class LogListener implements LogProvider.IListener {
         @Override
         public void logUpdated(LogProvider provider, List<LogEntry> entries) {
-
+            updateData(entries);
         }
     }
 

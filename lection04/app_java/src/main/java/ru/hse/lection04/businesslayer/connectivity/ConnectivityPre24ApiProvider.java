@@ -52,8 +52,6 @@ public class ConnectivityPre24ApiProvider extends AbstractConnectivityProvider {
             info.type = ConnectivityInfo.NO_CONNECTION;
         } else if (networkInfo != null && fallbackInfo != null && networkInfo.isConnectedOrConnecting() != fallbackInfo.isConnectedOrConnecting()) {
             info.type = fallbackInfo.getTypeName();
-        } else {
-            // info.type = fallbackInfo.getTypeName();
         }
 
         return info;
