@@ -1,6 +1,10 @@
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    app:autoSizeTextType="uniform"
+    app:autoSizeMinTextSize="5sp"
+    app:autoSizeMaxTextSize="45sp"
 
     android:id="@+id/text"
     android:layout_width="match_parent"
