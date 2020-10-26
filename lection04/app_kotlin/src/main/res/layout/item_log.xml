@@ -1,17 +1,17 @@
+
 <androidx.appcompat.widget.AppCompatTextView
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
 
-    app:autoSizeTextType="uniform"
-    app:autoSizeMinTextSize="5sp"
-    app:autoSizeMaxTextSize="45sp"
+    android:minHeight="8sp"
 
     android:id="@+id/text"
     android:layout_width="match_parent"
-    android:layout_height="32dp"
+    android:layout_height="wrap_content"
 
     android:gravity="center_vertical"
     android:padding="8dp"
 
     tools:context=".presentationlayer.MainActivity" />
+
