@@ -1,30 +1,31 @@
 package ru.hse.lection03.presentationlayer;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import java.io.Serializable;
 
 import ru.hse.lection03.R;
-import ru.hse.lection03.objects.Droid;
 
-public class DroidDetailsFragment extends DialogFragment {
-    protected static final String EXTRAS_DROID = "DROID";
+public class DroidDetailsFragment extends Fragment {
+    protected static final String EXTRAS = "NUMBER";
 
 
     // helper-метод для создания инстанса фрагмента
     // Это один из подходов в упрощении
-    public static DroidDetailsFragment newInstance(Droid droid) {
+    public static DroidDetailsFragment newInstance(Short number) {
         // Создаем данные, которые потом положим в фрагмент
         final Bundle extras = new Bundle();
-        extras.putSerializable(EXTRAS_DROID, droid);
+        extras.putSerializable(EXTRAS, number);
 
         final DroidDetailsFragment fragment = new DroidDetailsFragment();
         fragment.setArguments(extras);
@@ -43,44 +44,44 @@ public class DroidDetailsFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final Droid droid = droid();
-        if (droid != null) {
+        final Short number = number();
+        if (number != null) {
             // Устанавливаем имя
-            ((TextView) view.findViewById(R.id.name)).setText(droid.name);
+            TextView Name = view.findViewById(R.id.name);
+            Name.setText(Short.toString(number));
 
-            final TextView state = view.findViewById(R.id.state);
-
-            switch (droid.state) {
-                case Droid.STATE_REMOVED:
-                    state.setText(R.string.caption_droid_state_removed);
-                    state.setBackgroundResource(R.color.color_red);
+            switch (number % 2) {
+                case 0:
+                    Name.setTextColor(Color.parseColor("#FF0000"));
                     break;
 
-                case Droid.STATE_NEW:
-                    state.setText(R.string.caption_droid_state_new);
-                    state.setBackgroundResource(R.color.color_green);
+                case 1:
+                    Name.setTextColor(Color.parseColor("#0000FF"));
                     break;
 
                 default:
-                    state.setText(R.string.caption_droid_state_unknown);
-                    state.setBackgroundResource(R.color.color_black);
+                    Name.setTextColor(Color.parseColor("#000000"));
                     break;
             }
         }
+
     }
 
 
     // Метод для доставания объекта Droid из аргументов фрагмента
-    public Droid droid(){
+    public Short number(){
         if (getArguments() == null) {
             return null;
         }
 
-        final Serializable droid = getArguments().getSerializable(EXTRAS_DROID);
-        if (droid instanceof Droid) {
-            return (Droid) getArguments().getSerializable(EXTRAS_DROID);
+        final Serializable number = getArguments().getSerializable(EXTRAS);
+        if (number instanceof Short) {
+            return (Short) getArguments().getSerializable(EXTRAS);
         }
 
         return null;
     }
+
+
+
 }
