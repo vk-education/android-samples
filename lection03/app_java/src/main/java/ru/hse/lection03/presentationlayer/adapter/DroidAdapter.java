@@ -3,6 +3,7 @@ package ru.hse.lection03.presentationlayer.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,16 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ru.hse.lection03.R;
-import ru.hse.lection03.objects.Droid;
+import ru.hse.lection03.businesslayer.DroidRepository;
 
 public class DroidAdapter extends RecyclerView.Adapter<DroidViewHolder> {
     protected final DroidViewHolder.IListener mListener;
-    protected final List<Droid> mData;
+    protected final List<Short> mData;
 
 
-    public DroidAdapter(List<Droid> data, DroidViewHolder.IListener listener) {
+    public DroidAdapter(List<Short> data, DroidViewHolder.IListener listener) {
         mListener = listener;
         mData = data;
+
     }
 
 
@@ -39,7 +41,7 @@ public class DroidAdapter extends RecyclerView.Adapter<DroidViewHolder> {
     // Вставляем данные во ViewHolder
     @Override
     public void onBindViewHolder(@NonNull DroidViewHolder holder, int position) {
-        final Droid item = mData.get(position);
+        final Short item = mData.get(position);
 
         holder.bind(item);
     }
@@ -49,4 +51,6 @@ public class DroidAdapter extends RecyclerView.Adapter<DroidViewHolder> {
     public int getItemCount() {
         return mData.size();
     }
+
+
 }
