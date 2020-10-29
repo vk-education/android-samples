@@ -1,5 +1,7 @@
 package ru.hse.lection03.presentationlayer.adapter;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -7,7 +9,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ru.hse.lection03.R;
-import ru.hse.lection03.objects.Droid;
 
 public class DroidViewHolder extends RecyclerView.ViewHolder {
     public interface IListener {
@@ -42,22 +43,24 @@ public class DroidViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    void bind(Droid item) {
+    @SuppressLint("ResourceAsColor")
+    void bind(Short number) {
         // Ставим имя дроида
-        mName.setText(item.name);
+        mName.setText(Short.toString(number));
 
         // Ставим цвет, в зависимости от состояния дроида
-        switch (item.state) {
-            case Droid.STATE_REMOVED:
-                mImage.setImageResource(R.color.color_red);
+        switch (number % 2) {
+            case 0:
+                mName.setTextColor(Color.parseColor("#FF0000"));
                 break;
 
-            case Droid.STATE_NEW:
-                mImage.setImageResource(R.color.color_green);
+            case 1:
+                mName.setTextColor(Color.parseColor("#0000FF"));
                 break;
 
             default:
-                mImage.setImageResource(R.color.color_black);
+                //mImage.setImageResource(R.color.color_black);
+                mName.setTextColor(Color.parseColor("#000000"));
                 break;
         }
     }
