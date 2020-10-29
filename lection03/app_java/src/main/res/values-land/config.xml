@@ -1,3 +1,4 @@
 <resources>
     <bool name="is_dual">true</bool>
+    <integer name="number_of_columns">4</integer>
 </resources>
