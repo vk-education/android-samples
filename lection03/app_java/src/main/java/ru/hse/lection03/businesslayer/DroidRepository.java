@@ -2,20 +2,10 @@ package ru.hse.lection03.businesslayer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
-import ru.hse.lection03.objects.Droid;
 
 public class DroidRepository {
-    // Константы
-    public static final int DATA_SIZE = 100;
-    public static final float STATE_CRITICAL = 0.8f;
+    public static Short DATA_SIZE ;
 
-    // Для генерации случайных чисел
-    public static final Random RANOMIZER = new Random();
-
-
-    // Объекты для реализации хардкорного синглтона в java
     private static volatile DroidRepository mInstance;
 
     public static DroidRepository getInstance() {
@@ -30,7 +20,7 @@ public class DroidRepository {
     }
 
 
-    protected final List<Droid> mData;
+    protected final List<Short> mData;
 
 
     private DroidRepository() {
@@ -39,41 +29,28 @@ public class DroidRepository {
 
 
     // получить список Дроидов
-    public List<Droid> list() {
+    public List<Short> list() {
         return mData;
     }
 
     // получить дроида по индексу
-    public Droid item(int index) {
+    public Short item(int index) {
         return mData.get(index);
     }
 
+    public void addNewNumber() {
+        mData.add(++DATA_SIZE);
+    }
 
     // Функция инициализации списка дроидов
-    protected List<Droid> initializeData() {
-        final List<Droid> data = new ArrayList<>();
+    protected List<Short> initializeData() {
+        final List<Short> data = new ArrayList<>();
 
         // Наполняем лист в цикле
-        for (int position = 0; position < DATA_SIZE; position ++) {
-            // Генерим имя дроида
-            final String name = "Droid " + position;
-
-            // Получаем случайное число, и определяем состояние дроида
-            final int state;
-            if (RANOMIZER.nextFloat() >= STATE_CRITICAL) {
-                state = Droid.STATE_REMOVED;
-            } else {
-                state = Droid.STATE_NEW;
-            }
-
-            // Создаем дроида и добавляем его в список
-            final Droid droid = new Droid();
-            droid.name = name;
-            droid.state = state;
-
-            data.add(droid);
+        for (short position = 0; position <= 100; position ++) {
+            data.add(position);
         }
-
+        DATA_SIZE=100;
         return data;
     }
 }
