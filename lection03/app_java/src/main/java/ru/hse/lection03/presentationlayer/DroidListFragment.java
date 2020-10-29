@@ -6,23 +6,24 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ru.hse.lection03.R;
 import ru.hse.lection03.businesslayer.DroidRepository;
-import ru.hse.lection03.objects.Droid;
 import ru.hse.lection03.presentationlayer.adapter.DroidAdapter;
 import ru.hse.lection03.presentationlayer.adapter.DroidViewHolder;
 
 public class DroidListFragment extends Fragment {
     // Вариант кода, для общения с activity без Intent
     public interface IListener {
-        public void onDroidClicked(Droid droid);
+        public void onDroidClicked(Short number);
     }
 
 
@@ -33,6 +34,7 @@ public class DroidListFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+
 
         if (requireActivity() instanceof IListener) {
             mListener = (IListener) requireActivity();
@@ -53,14 +55,24 @@ public class DroidListFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         // инициализируем View для отображения списка
         final RecyclerView recycler = view.findViewById(R.id.recycler);
+        int numberOfColumns = getResources().getInteger(R.integer.number_of_columns);
 
         recycler.setAdapter(new DroidAdapter(DroidRepository.getInstance().list(), new DroidClickHandler()));
-        recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recycler.setLayoutManager(new GridLayoutManager(requireContext(), numberOfColumns));
+
+        Button buttonNewView = (Button) getView().findViewById(R.id.button);
+        buttonNewView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DroidRepository.getInstance().addNewNumber();
+                recycler.setAdapter(new DroidAdapter(DroidRepository.getInstance().list(), new DroidClickHandler()));
+            }
+        });
     }
 
     @Override
@@ -76,17 +88,15 @@ public class DroidListFragment extends Fragment {
     class DroidClickHandler implements DroidViewHolder.IListener {
         @Override
         public void onDroidClicked(int position) {
-            final Droid droid = DroidRepository.getInstance().item(position);
-
+            final Short number = DroidRepository.getInstance().item(position);
 
             // Вариант кода, для общения с activity без Intent
             if (mListener != null) {
-                mListener.onDroidClicked(droid);
+                mListener.onDroidClicked(number);
             }
 
-            // Вариант кода, для android:launchMode="singleInstance"
-//            final Intent intent = MainActivity.droidDetailsIntent(requireContext(), droid);
-//            startActivity(intent);
+
+
         }
     }
 }
