@@ -1,0 +1,8 @@
+// common
+include ':common:base'
+include ':common:giphy'
+include ':common:image'
+
+// Architecture patterns
+include ':mvvm:simple'
+include ':mvvm:jetpack'

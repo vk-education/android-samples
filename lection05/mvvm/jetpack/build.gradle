@@ -1,0 +1,22 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+apply from: file ('../../scripts/module_app.gradle')
+
+android {
+    defaultConfig {
+        applicationId "ru.hse.lection05.mvvm.jetpack"
+    }
+}
+
+dependencies {
+    implementation "org.koin:koin-android:$koin_version" // Koin for Android
+    implementation "org.koin:koin-androidx-scope:$koin_version" // Koin for Lifecycle scoping
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version" // Koin for Android Architecture ViewModel
+
+    implementation project(path: ':common:base')
+    implementation project(path: ':common:giphy')
+    implementation project(path: ':common:image')
+}

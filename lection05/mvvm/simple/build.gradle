@@ -1,0 +1,18 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+apply from: file ('../../scripts/module_app.gradle')
+
+android {
+    defaultConfig {
+        applicationId "ru.hse.lection05.mvvm.simple"
+    }
+}
+
+dependencies {
+    implementation project(path: ':common:base')
+    implementation project(path: ':common:giphy')
+    implementation project(path: ':common:image')
+}

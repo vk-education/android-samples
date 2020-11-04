@@ -1,0 +1,14 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+apply from: file('../../scripts/module_app.gradle')
+
+
+dependencies {
+    implementation ("io.paperdb:paperdb:2.7.1")
+
+    api project(path: ':common:giphy')
+    api project(path: ':common:image')
+}

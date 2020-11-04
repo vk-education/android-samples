@@ -1,0 +1,2 @@
+apply from: file('../../scripts/dependencies_common.gradle')
+apply from: file('../../scripts/dependencies_inreface.gradle')

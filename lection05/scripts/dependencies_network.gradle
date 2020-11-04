@@ -1,0 +1,7 @@
+dependencies {
+    implementation ("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation ("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation ("com.squareup.okhttp3:logging-interceptor:$okhttpVersion")
+    implementation ("com.squareup.okhttp3:okhttp-urlconnection:$okhttpVersion")
+    implementation ("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
+}
