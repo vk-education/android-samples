@@ -4,6 +4,7 @@ plugins {
 }
 
 apply from: file('../../scripts/module_app.gradle')
+apply from: file('../../scripts/dependencies_network.gradle')
 
 
 dependencies {

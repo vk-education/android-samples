@@ -13,7 +13,8 @@ import ru.hse.lection05.base.R
 class OnlineAccessorFactory(val context: Context) {
     fun accessor(tag: String): IDataAccessor {
         val key = context.getString(R.string.api_key)
-        val interceptor = AuthorizationInterceptor(key)
+        val rapidKey = context.getString(R.string.rapid_api_key)
+        val interceptor = AuthorizationInterceptor(key, rapidKey)
 
         val client = OkHttpClient.Builder()
             .addInterceptor(interceptor)

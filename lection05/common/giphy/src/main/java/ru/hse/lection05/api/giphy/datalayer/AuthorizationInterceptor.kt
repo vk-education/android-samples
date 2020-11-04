@@ -3,7 +3,7 @@ package ru.hse.lection05.api.giphy.datalayer
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class AuthorizationInterceptor(protected val key: String): Interceptor {
+class AuthorizationInterceptor(protected val key: String, protected val rapidKey: String): Interceptor {
     companion object {
         const val API_KEY = "api_key"
 
@@ -11,7 +11,6 @@ class AuthorizationInterceptor(protected val key: String): Interceptor {
         const val HEADER_KEY = "X-RapidAPI-Key"
 
         const val VALUE_HOST = "giphy.p.rapidapi.com"
-        const val VALUE_KEY = "b6c34f2048mshcf5f5180af0248dp13843cjsna8c6d25ebe2d"
     }
 
 
@@ -26,7 +25,7 @@ class AuthorizationInterceptor(protected val key: String): Interceptor {
 
         val request = original.newBuilder()
             .addHeader(HEADER_HOST, VALUE_HOST)
-            .addHeader(HEADER_KEY, VALUE_KEY)
+            .addHeader(HEADER_KEY, rapidKey)
             .url(url)
             .build()
 
