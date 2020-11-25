@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">GithubApplication</string>
+    <string name="button_name">Request</string>
+</resources>
