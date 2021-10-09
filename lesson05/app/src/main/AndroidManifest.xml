@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ru.mail.education.lesson05">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Lesson05">
+
+
+        <activity
+            android:name=".FragmentedActivity"
+            android:exported="true"
+            android:label="FragmentedActivity"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:supportsPictureInPicture="true"
+            android:configChanges="orientation|locale|layoutDirection|screenSize|smallestScreenSize|screenLayout"
+            android:label="SimpleActivity"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".StandardActivity" android:launchMode="standard" />
+        <activity android:name=".SingleTopActivity" android:launchMode="singleTop" />
+        <activity android:name=".SingleTaskActivity" android:launchMode="singleTask" android:taskAffinity="" />
+        <activity android:name=".SingleInstanceActivity" android:launchMode="singleInstance" android:taskAffinity="" />
+
+        <activity-alias android:name="Deeplink" android:targetActivity=".MainActivity" android:exported="true">
+            <intent-filter>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:scheme="https" android:host="helloworld"/>
+            </intent-filter>
+        </activity-alias>
+    </application>
+
+</manifest>

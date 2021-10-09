@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    android:gravity="center"
+
+    tools:context=".MainActivity"
+    >
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        />
+    <Button
+        android:id="@+id/launch_standard_activity"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+
+        android:text="launch_standard_activity"
+        />
+    <Button
+        android:id="@+id/launch_single_top_activity"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+
+        android:text="launch_single_top_activity"
+        />
+    <Button
+        android:id="@+id/launch_single_task_activity"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+
+        android:text="launch_single_task_activity"
+        />
+    <Button
+        android:id="@+id/launch_single_instance_activity"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+
+        android:text="launch_single_instance_activity"
+        />
+    <Button
+        android:id="@+id/show_pip"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+
+        android:text="show_pip"
+        />
+    <Button
+        android:id="@+id/open_document"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+
+        android:text="open_document"
+        />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

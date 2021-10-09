@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/nkleshchin/Documents/hse-android-samples-2/lesson05/app/src/main/res/layout/activity_fragmented.xml" value="0.3546875" />
+        <entry key="..\:/Users/nkleshchin/Documents/hse-android-samples-2/lesson05/app/src/main/res/layout/activity_fragmented_static.xml" value="0.29635416666666664" />
+        <entry key="..\:/Users/nkleshchin/Documents/hse-android-samples-2/lesson05/app/src/main/res/layout/activity_main.xml" value="0.17198581560283688" />
+        <entry key="..\:/Users/nkleshchin/Documents/hse-android-samples-2/lesson05/app/src/main/res/layout/fragment_simple.xml" value="0.3546875" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
