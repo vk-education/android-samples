@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/foreground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/foreground"/>
+
+    <Button
+        android:id="@+id/to_lower"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/to_lower_case"/>
+
+    <Button
+        android:id="@+id/to_upper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/to_upper_case"/>
+</LinearLayout>

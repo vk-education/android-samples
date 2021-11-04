@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "856248520132",
+    "project_id": "lesson10-929e3",
+    "storage_bucket": "lesson10-929e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856248520132:android:0d0cc39ee54bd1b80e2891",
+        "android_client_info": {
+          "package_name": "superp.techpark.ru.lesson10"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856248520132-sdloia8l3i45og1nl59lk3l9qk90j5dj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAC6hmjCLK6fP3kZsHTQNRlplgwGjCUodQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856248520132-sdloia8l3i45og1nl59lk3l9qk90j5dj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Lecture 10</string>
+    <string name="channel_messages_name">Сообщения</string>
+    <string name="channel_messages_description">Важные сообщения</string>
+    <string name="channel_default_name">Общие уведомления</string>
+    <string name="channel_likes_name">Лайки</string>
+    <string name="channel_likes_description">Просто лайки</string>
+    <string name="simple_name">Простое уведомление</string>
+    <string name="simple_description">Ничего особенного</string>
+    <string name="message_name">Сообщение</string>
+
+    <string name="user_name">User Name</string>
+    <string name="new_like">Нравится ваша публикация</string>
+
+    <string name="big_image">Большая картинка</string>
+
+    <string name="message_summary">Сообщение #%d</string>
+    <string name="show">Показать</string>
+    <string name="clear">Удалить все</string>
+    <string name="ongoing">Ongoing/Progress</string>
+    <string name="infinite_progress">Бесконечный прогресс</string>
+    <string name="remove">Удалить</string>
+    <string name="service">Intent Service demo</string>
+    <string name="to_lower_case">to lower case</string>
+    <string name="to_upper_case">to upper case</string>
+    <string name="foreground">foregound</string>
+    <string name="working">working....</string>
+</resources>
