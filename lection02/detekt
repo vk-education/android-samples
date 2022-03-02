@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+ROOT_FOLDER=build/bin
+VERSION=1.13.0
+DETEKT_BIN=$ROOT_FOLDER/detekt-$VERSION
+mkdir -p $ROOT_FOLDER
+if [ ! -f "$DETEKT_BIN" ]; then
+  echo "Please wait, first download..."
+  rm -f $ROOT_FOLDER/detekt-*
+  curl -sSL https://github.com/detekt/detekt/releases/download/v${VERSION}/detekt --output $DETEKT_BIN
+  chmod a+x $DETEKT_BIN
+fi
+
+if [ $CI ]; then
+  export REVIEWDOG_GITHUB_API_TOKEN="${GITHUB_TOKEN}"
+  $DETEKT_BIN --config .github/workflows/assets/detekt.yml --report xml:detekt_report.xml
+
+  reviewdog -f=checkstyle \
+      -name="detekt" \
+      -reporter="github-pr-review" \
+      -fail-on-error="true" <detekt_report.xml
+else
+  $DETEKT_BIN --config .github/workflows/assets/detekt.yml "$@"
+fi
+
+echo "Done!"
