@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/view_movie__iv_poster"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/purple_200" />
+
+    <TextView
+        android:id="@+id/view_movie_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Film title sfdlkjf jlksdjf klsjdfkl jsdklfj klsdjlkf jlksdjf lksldk"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@+id/view_movie_tv_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/view_movie__iv_poster"
+        app:layout_constraintTop_toTopOf="@id/view_movie__iv_poster"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/view_movie_tv_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@id/view_movie__iv_poster"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/view_movie__iv_poster"
+        app:layout_constraintTop_toBottomOf="@id/view_movie_tv_title"
+        tools:text="Film description" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
