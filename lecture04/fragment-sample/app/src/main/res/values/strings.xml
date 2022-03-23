@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Lecture5</string>
+    <string name="replace">replace</string>
+    <string name="add">add</string>
+    <string name="remove">remove</string>
+    <string name="pop">pop</string>
+    <string name="inclusive">inclusive</string>
+    <string name="tag">tag</string>
+    <string name="pop_inclusive">pop inc</string>
+    <string name="attach">attach</string>
+    <string name="detach">detach</string>
+    <string name="hide">hide</string>
+    <string name="show">show</string>
+    <string name="add_to_backstack">addToBackStack</string>
+</resources>

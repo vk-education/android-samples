@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.lecture5">
+
+    <application
+        android:name=".presentation.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Lecture5">
+        <activity
+            android:name=".presentation.activities.standard.StandardA"
+            android:exported="true"
+            android:launchMode="standard">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <activity android:name=".presentation.activities.standard.StandardB" />
+        <activity android:name=".presentation.activities.standard.StandardC" />
+        <activity android:name=".presentation.activities.standard.StandardD" />
+
+
+        <activity
+            android:name=".presentation.activities.standard.affinity.StandardAffinityA"
+            android:taskAffinity="com.example.lecture5.affinity.A" />
+
+        <activity
+            android:name=".presentation.activities.standard.affinity.StandardAffinityB"
+            android:taskAffinity="com.example.lecture5.affinity.B" />
+
+        <activity
+            android:name=".presentation.activities.standard.affinity.StandardAffinityC"
+            android:taskAffinity="com.example.lecture5.affinity.C" />
+
+        <activity
+            android:name=".presentation.activities.standard.affinity.StandardAffinityD"
+            android:taskAffinity="com.example.lecture5.affinity.D" />
+
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.top.SingleTopA"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.top.SingleTopB"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.top.SingleTopC"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.top.SingleTopD"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.top.affinity.SingleTopAffinityA"
+            android:launchMode="singleTop"
+            android:taskAffinity="com.example.lecture5.affinity.A" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.top.affinity.SingleTopAffinityB"
+            android:launchMode="singleTop"
+            android:taskAffinity="com.example.lecture5.affinity.B" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.top.affinity.SingleTopAffinityC"
+            android:launchMode="singleTop"
+            android:taskAffinity="com.example.lecture5.affinity.C" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.top.affinity.SingleTopAffinityD"
+            android:launchMode="singleTop"
+            android:taskAffinity="com.example.lecture5.affinity.D" />
+
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.task.SingleTaskA"
+            android:launchMode="singleTask" />
+
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.task.SingleTaskB"
+            android:launchMode="singleTask" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.task.SingleTaskC"
+            android:launchMode="singleTask" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.task.SingleTaskD"
+            android:launchMode="singleTask" />
+
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.task.affinity.SingleTaskAffinityA"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.example.lecture5.affinity.A" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.task.affinity.SingleTaskAffinityB"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.example.lecture5.affinity.B" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.task.affinity.SingleTaskAffinityC"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.example.lecture5.affinity.C" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.task.affinity.SingleTaskAffinityD"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.example.lecture5.affinity.D" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.instance.SingleInstanceA"
+            android:launchMode="singleInstance" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.instance.SingleInstanceB"
+            android:launchMode="singleInstance" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.instance.SingleInstanceC"
+            android:launchMode="singleInstance" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.instance.SingleInstanceD"
+            android:launchMode="singleInstance" />
+
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.instance.affinity.SingleInstanceAffinityA"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.example.lecture5.affinity.A" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.instance.affinity.SingleInstanceAffinityB"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.example.lecture5.affinity.B" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.instance.affinity.SingleInstanceAffinityC"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.example.lecture5.affinity.C" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.instance.affinity.SingleInstanceAffinityD"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.example.lecture5.affinity.D" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.instance.pertask.SingleInstancePerTaskA"
+            android:launchMode="singleInstancePerTask" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.instance.pertask.SingleInstancePerTaskB"
+            android:launchMode="singleInstancePerTask" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.instance.pertask.SingleInstancePerTaskC"
+            android:launchMode="singleInstancePerTask" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.instance.pertask.SingleInstancePerTaskD"
+            android:launchMode="singleInstancePerTask" />
+
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.instance.pertask.affinity.SingleInstancePerTaskAffinityA"
+            android:launchMode="singleInstancePerTask"
+            android:taskAffinity="com.example.lecture5.affinity.A" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.instance.pertask.affinity.SingleInstancePerTaskAffinityB"
+            android:launchMode="singleInstancePerTask"
+            android:taskAffinity="com.example.lecture5.affinity.B" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.instance.pertask.affinity.SingleInstancePerTaskAffinityC"
+            android:launchMode="singleInstancePerTask"
+            android:taskAffinity="com.example.lecture5.affinity.C" />
+
+        <activity
+            android:name="com.example.lecture5.presentation.activities.single.instance.pertask.affinity.SingleInstancePerTaskAffinityD"
+            android:launchMode="singleInstancePerTask"
+            android:taskAffinity="com.example.lecture5.affinity.D" />
+    </application>
+
+</manifest>

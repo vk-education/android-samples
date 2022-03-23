@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/navigation_home">
+
+    <include app:graph="@navigation/navigation_home" />
+
+    <fragment
+        android:id="@+id/navigation_map"
+        android:name="com.example.lecture5.MapFragment"
+        android:label="MapFragment" />
+
+    <fragment
+        android:id="@+id/navigation_storage"
+        android:name="com.example.lecture5.StorageFragment"
+        android:label="StorageFragment" />
+
+</navigation>

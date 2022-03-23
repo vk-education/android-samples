@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        app:constraint_referenced_ids="add_button, replace_button, remove_button, pop_button, pop_inclusive_button, detach_button, hide_button, show_button"
+        app:flow_horizontalBias="0"
+        app:flow_horizontalGap="4dp"
+        app:flow_horizontalStyle="packed"
+        app:flow_verticalGap="2dp"
+        app:flow_wrapMode="aligned"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container" />
+
+    <Button
+        android:id="@+id/replace_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/replace"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/remove_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/remove"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/pop_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pop"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/pop_inclusive_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pop_inclusive"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/detach_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detach"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/hide_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hide"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/show_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show"
+        tools:ignore="MissingConstraints" />
+
+    <CheckBox
+        android:id="@+id/backstack_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_to_backstack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flow_buttons" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

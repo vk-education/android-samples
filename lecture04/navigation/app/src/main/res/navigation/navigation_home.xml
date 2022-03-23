@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_home"
+    app:startDestination="@id/fragment_home">
+
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="com.example.lecture5.HomeFragment"
+        android:label="HomeFragment">
+        <action
+            android:id="@+id/action_fragment_home_to_fragment_counter"
+            app:destination="@id/fragment_counter" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_counter"
+        android:name="com.example.lecture5.CounterFragment"
+        android:label="CounterFragment">
+        <argument
+            android:name="current_value"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+</navigation>
