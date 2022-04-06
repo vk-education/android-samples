@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Lecture06</string>
+    <string name="cases_format">active: %1s; critical: %2s; new: %3s; recovered: %4s; total: %5s;</string>
+    <string name="some_error">Some error</string>
+</resources>
