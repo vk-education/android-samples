@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">lesson7_2</string>
+    <string name="shared_preferences">Shared Preferences</string>
+    <string name="some_boolean">Some boolean</string>
+    <string name="directories">Directories</string>
+    <string name="file_manager">File Manager</string>
+    <string name="sqlite">SQLite</string>
+    <string name="add">Add</string>
+    <string name="enumerate">Enumerate</string>
+    <string name="clean">Clean</string>
+    <string name="files_dir">Files Dir:</string>
+    <string name="get_dir">Get Dir:</string>
+    <string name="cache_dir">Cache Dir:</string>
+    <string name="external_public_dir">External public Dir:</string>
+    <string name="ext_cache_dir">Ext. Cache Dir:</string>
+    <string name="downloads">Downloads:</string>
+    <string name="pictures">Pictures:</string>
+    <string name="external_dir">External dir:</string>
+</resources>
