@@ -1,0 +1,11 @@
+(function(){
+    $(document).on('click', '.tabs__item', function(event) {
+        $(this).addClass('-active').siblings().removeClass('-active');
+        contentsBlock = $(this).closest(".tabs-js").find(".tabs-content-js").eq(0);
+        nodeIndex = $(this).index();
+        contentBlock = $(contentsBlock).children().eq(nodeIndex);
+        $(contentBlock).addClass('-active').siblings().removeClass('-active');
+        event.preventDefault();
+    });
+})();
+

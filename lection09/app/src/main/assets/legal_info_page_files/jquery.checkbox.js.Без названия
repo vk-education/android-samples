@@ -1,0 +1,35 @@
+/**
+ *  Инициализация основных модулей
+ *  @require 'jquery.js'
+ */
+(function ($, window) {
+	"use strict";
+	var checkboxInput;
+
+	var sels = {
+		checkbox: '.js-checkbox',
+		input: '.js-checkbox__input'
+	};
+	var clss = {
+		checked: 'b-radiogroup__item_checked'
+	};
+	var attrs = {};
+	
+	var inputOnChenge = function (el) {
+		var item = $(el).parents(sels.checkbox);
+		item.toggleClass(clss.checked, el.checked);
+		
+		return item;
+	}
+	
+	if ((checkboxInput = $(sels.input)).length) {
+		$(document).on("change",sels.input, function (event) {
+			var item = inputOnChenge(event.target);
+			
+			item.siblings().find(sels.input).each(function(){
+				inputOnChenge(this);
+			}) // sorry *(
+		});
+	}
+
+})(jQuery, this);

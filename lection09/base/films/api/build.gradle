@@ -1,0 +1,6 @@
+apply from: "$rootDir/scripts/kotlin_library.gradle"
+
+dependencies {
+    implementation project(":base:common")
+    implementation project(":base:loggers:api")
+}

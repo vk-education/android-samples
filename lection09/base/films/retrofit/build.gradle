@@ -1,0 +1,22 @@
+apply from: "$rootDir/scripts/module.gradle"
+
+dependencies {
+    implementation project(":base:films:api")
+
+    // Network
+    // https://square.github.io/retrofit/
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+
+    // https://github.com/square/retrofit/tree/master/retrofit-converters/gson
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    // https://square.github.io/okhttp/
+    implementation "com.squareup.okhttp3:okhttp:4.9.3"
+
+    // https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
+    debugImplementation "com.squareup.okhttp3:logging-interceptor:4.9.2"
+
+    // Parser
+    // https://github.com/google/gson
+    implementation "com.google.code.gson:gson:2.9.0"
+}

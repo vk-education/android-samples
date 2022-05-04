@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/nkleshchin/AndroidRepositories/android-samples/lection09/app/src/main/res/layout/activity_main.xml" value="0.340625" />
+        <entry key="..\:/Users/nkleshchin/AndroidRepositories/android-samples/lection09/app/src/main/res/layout/content_film_list.xml" value="0.28802083333333334" />
+        <entry key="..\:/Users/nkleshchin/AndroidRepositories/android-samples/lection09/app/src/main/res/layout/content_menu.xml" value="0.3546875" />
+        <entry key="..\:/Users/nkleshchin/AndroidRepositories/android-samples/lection09/app/src/main/res/layout/content_webview.xml" value="0.3546875" />
+        <entry key="..\:/Users/nkleshchin/AndroidRepositories/android-samples/lection09/app/src/main/res/layout/content_webview_interaction.xml" value="0.3078125" />
+        <entry key="..\:/Users/nkleshchin/AndroidRepositories/android-samples/lection09/app/src/main/res/layout/item_film.xml" value="0.28802083333333334" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

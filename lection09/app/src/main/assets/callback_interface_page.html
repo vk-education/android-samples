@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript">
+			function showAndroidToast(message) { CustomWebInterface.showToast(message); }
+			function showAndroidDialog(message) { CustomWebInterface.showDialog(message); }
+
+			function changeBackgroundColor(color) {
+				document.body.style.setProperty("background-color", color);
+			}
+
+			function getGhibliFilms() {
+			    var xmlHttp = new XMLHttpRequest();
+				xmlHttp.open( "GET", 'https://ghibliapi.herokuapp.com/films', false ); // false for synchronous request
+				xmlHttp.send( null );
+
+				return xmlHttp.responseText;
+			}
+		</script>
+	</head>
+
+	<body>
+		<div><input type="button" value="Hello Toast" onClick="showAndroidToast('Hello Toast')" /></div>
+		<div><input type="button" value="Hello Dialog" onClick="showAndroidDialog('Hello Dialog')" /></div>
+	</body>
+</html>

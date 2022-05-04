@@ -1,0 +1,24 @@
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "lection09"
+
+
+include ':app'
+
+include ':base:common'
+include ':base:images:api'
+include ':base:images:glide'
+include ':base:loggers:api'
+include ':base:loggers:simple'
+include ':base:loggers:empty'
+
+include ':features:videos:api'
+include ':base:films:api'
+include ':base:films:simple'
+include ':base:films:retrofit'

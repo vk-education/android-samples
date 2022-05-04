@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="1.8">
+      <module name="lection09.app" target="11" />
+      <module name="lection09.base.films.retrofit" target="11" />
+      <module name="lection09.base.films.simple" target="11" />
+      <module name="lection09.base.images.api" target="11" />
+      <module name="lection09.base.images.glide" target="11" />
+      <module name="lection09.base.loggers.empty" target="11" />
+      <module name="lection09.base.loggers.simple" target="11" />
+      <module name="lection09.base.videos.api" target="11" />
+      <module name="lection09.features.videos.api" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
