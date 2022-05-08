@@ -24,9 +24,11 @@ import org.junit.Test
 class MockkSampleUnitTest {
 	// good link - https://notwoods.github.io/mockk-guidebook/
 
-	@BeforeClass
-	fun setup() {
+	companion object {
+		@BeforeClass
+		fun setup() {
 
+		}
 	}
 
 	@Before
@@ -44,13 +46,16 @@ class MockkSampleUnitTest {
 
 	@Test
 	fun mockk_test_must_fail() {
-		ServiceLocator.inject(FilmViewModel::class.java)
+		val serviceLocator = mockk<ServiceLocator>(relaxed = true)
+		serviceLocator.inject(FilmViewModel::class.java)
+
+		verify { serviceLocator.inject(FilmViewModel::class.java) }
 	}
 
 	@Test
 	fun mockk_test_must_success() {
 		val mockAccessor = mockk<IApiAccessor>(relaxUnitFun = true)
-		every { runBlocking { mockAccessor.filmList()  } } returns emptyList()
+		every { runBlocking { mockAccessor.filmList() } } returns emptyList()
 
 		val mockkFactory = mockk<ServiceLocator.IFactory>(relaxUnitFun = true)
 		every { mockkFactory.create(FilmManager::class.java) } returns FilmManager()
@@ -65,7 +70,7 @@ class MockkSampleUnitTest {
 		verify { mockkFactory.create(IFilmProvider::class.java) }
 		verify { mockkFactory.create(IApiAccessor::class.java) }
 
-		verify { runBlocking { mockAccessor.filmList()  } }
+		verify { runBlocking { mockAccessor.filmList() } }
 		// or
 		verify(exactly = 1) { runBlocking { mockAccessor.filmList() } }
 	}
