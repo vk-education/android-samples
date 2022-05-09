@@ -24,9 +24,13 @@ import org.junit.Test
 class MockkSampleUnitTest {
 	// good link - https://notwoods.github.io/mockk-guidebook/
 
-	@BeforeClass
-	fun setup() {
+	companion object {
 
+		@BeforeClass
+		@JvmStatic
+		fun setup() {
+
+		}
 	}
 
 	@Before
@@ -44,6 +48,10 @@ class MockkSampleUnitTest {
 
 	@Test
 	fun mockk_test_must_fail() {
+		val mockkFactory = mockk<ServiceLocator.IFactory>(relaxUnitFun = false)
+		every { mockkFactory.create(FilmViewModel::class.java) } returns FilmManager()
+		ServiceLocator.addFactory(mockkFactory)
+
 		ServiceLocator.inject(FilmViewModel::class.java)
 	}
 
