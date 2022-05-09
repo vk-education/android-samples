@@ -10,7 +10,10 @@ import company.vk.common.ServiceLocator
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
@@ -21,57 +24,63 @@ import org.junit.Test
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
+@ExperimentalCoroutinesApi
+@DelicateCoroutinesApi
 class MockkSampleUnitTest {
-	// good link - https://notwoods.github.io/mockk-guidebook/
+    // good link - https://notwoods.github.io/mockk-guidebook/
 
-	companion object {
-		@BeforeClass
-		fun setup() {
+    companion object {
+        @BeforeClass
+        fun setup() {
 
-		}
-	}
+        }
+    }
 
-	@Before
-	fun prepare() {
-		val mockLogger = mockk<Logger.ILogger>(relaxUnitFun = true)
+    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
 
-		Logger.initialize(mockLogger)
-	}
+    @Before
+    fun prepare() {
+        val mockLogger = mockk<Logger.ILogger>(relaxUnitFun = true)
+        Logger.initialize(mockLogger)
 
-	@After
-	fun clean() {
+        Dispatchers.setMain(mainThreadSurrogate)
+    }
 
-	}
+    @After
+    fun clean() {
+        Dispatchers.resetMain()
+        mainThreadSurrogate.close()
+    }
 
 
-	@Test
-	fun mockk_test_must_fail() {
-		val serviceLocator = mockk<ServiceLocator>(relaxed = true)
-		serviceLocator.inject(FilmViewModel::class.java)
+    @Test
+    fun mockk_test_must_fail() {
+        val serviceLocator = mockk<ServiceLocator>(relaxed = true)
+        serviceLocator.inject(FilmViewModel::class.java)
 
-		verify { serviceLocator.inject(FilmViewModel::class.java) }
-	}
+        verify { serviceLocator.inject(FilmViewModel::class.java) }
+    }
 
-	@Test
-	fun mockk_test_must_success() {
-		val mockAccessor = mockk<IApiAccessor>(relaxUnitFun = true)
-		every { runBlocking { mockAccessor.filmList() } } returns emptyList()
+    @Test
+    fun mockk_test_must_success() = runTest {
+        val mockAccessor = mockk<IApiAccessor>(relaxUnitFun = true)
+        every { runBlocking { mockAccessor.filmList() } } returns emptyList()
 
-		val mockkFactory = mockk<ServiceLocator.IFactory>(relaxUnitFun = true)
-		every { mockkFactory.create(FilmManager::class.java) } returns FilmManager()
-		every { mockkFactory.create(IFilmProvider::class.java) } returns FilmProvider()
-		every { mockkFactory.create(IApiAccessor::class.java) } returns mockAccessor
-		ServiceLocator.addFactory(mockkFactory)
+        val mockkFactory = mockk<ServiceLocator.IFactory>(relaxUnitFun = true)
+        every { mockkFactory.create(FilmManager::class.java) } returns FilmManager()
+        every { mockkFactory.create(IFilmProvider::class.java) } returns FilmProvider()
+        every { mockkFactory.create(IApiAccessor::class.java) } returns mockAccessor
+        ServiceLocator.addFactory(mockkFactory)
 
-		val model = FilmViewModel()
-		model.load()
+        val model = FilmViewModel()
+        model.load()
 
-		verify { mockkFactory.create(FilmManager::class.java) }
-		verify { mockkFactory.create(IFilmProvider::class.java) }
-		verify { mockkFactory.create(IApiAccessor::class.java) }
+        verify { mockkFactory.create(FilmManager::class.java) }
+        verify { mockkFactory.create(IFilmProvider::class.java) }
+        verify { mockkFactory.create(IApiAccessor::class.java) }
 
-		verify { runBlocking { mockAccessor.filmList() } }
-		// or
-		verify(exactly = 1) { runBlocking { mockAccessor.filmList() } }
-	}
+        verify { runBlocking { mockAccessor.filmList() } }
+        // or
+        verify(exactly = 1) { runBlocking { mockAccessor.filmList() } }
+    }
 }
