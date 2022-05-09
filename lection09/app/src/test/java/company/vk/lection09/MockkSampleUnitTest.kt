@@ -57,11 +57,13 @@ class MockkSampleUnitTest {
 
     @Test
     fun mockk_test_must_fail() {
-        val mockkFactory = mockk<ServiceLocator.IFactory>(relaxUnitFun = false)
-        every { mockkFactory.create(FilmViewModel::class.java) } returns FilmManager()
+        val mockkFactory = mockk<ServiceLocator.IFactory>(relaxUnitFun = true)
+        every { mockkFactory.create(FilmViewModel::class.java) } returns FilmViewModel()
         ServiceLocator.addFactory(mockkFactory)
 
         ServiceLocator.inject(FilmViewModel::class.java)
+
+        verify { mockkFactory.create(FilmViewModel::class.java) }
     }
 
     @Test
