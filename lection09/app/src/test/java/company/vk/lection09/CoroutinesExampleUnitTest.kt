@@ -3,87 +3,98 @@ package company.vk.lection09
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 
-@ExperimentalCoroutinesApi
-class CoroutinesExampleUnitTest {
+interface Counter {
 
-    private suspend fun originalImplementation(delayInMillis: Long = 1000) {
-        val dispatcher = Dispatchers.Default
-            .limitedParallelism(1)
-        var counter = 0
-        GlobalScope.launch {
+    suspend fun increaseCounterAndPrintAsync()
+}
+
+@ExperimentalCoroutinesApi
+class OriginCounter(
+    private val scope: CoroutineScope
+) : Counter {
+
+    private var counter = 0
+
+    override suspend fun increaseCounterAndPrintAsync() {
+        scope.launch {
             repeat(100) {
-                launch(dispatcher) {
+                launch {
                     val oldCounter = counter++
-                    delay(delayInMillis)
+                    delay(1000L)
                     println("$oldCounter and ${counter++}")
                 }
             }
         }.join()
     }
+}
 
-    private suspend fun fixedImplementation(delayInMillis: Long = 1000) {
-        val dispatcher = Dispatchers.Default
-            .limitedParallelism(1)
+@ExperimentalCoroutinesApi
+class MutexCounter(
+    private val scope: CoroutineScope
+) : Counter {
 
-        var counter = 0
-        val counterMutex = Mutex()
-        GlobalScope.launch {
+    private val mutex = Mutex()
+
+    private var counter = 0
+
+    override suspend fun increaseCounterAndPrintAsync() {
+        scope.launch {
             repeat(100) {
-                launch(dispatcher) {
-                    counterMutex.withLock {
+                launch {
+                    mutex.withLock {
                         val oldCounter = counter++
-                        delay(delayInMillis)
+                        delay(1000L)
                         println("$oldCounter and ${counter++}")
                     }
                 }
             }
         }.join()
     }
+}
 
-    @Test
-    fun originalImplementationTest() {
-        val result = doWithMockOutStream {
-            runBlocking {
-                originalImplementation()
-            }
-        }
-        Assert.assertNotEquals(expectedForWorkImpl(), result)
+@ExperimentalCoroutinesApi
+class CoroutinesExampleUnitTest {
+
+    private val printStreamByteArray = ByteArrayOutputStream()
+    private val mockPrintStream = PrintStream(printStreamByteArray)
+    private val consolePrintStream = System.out
+
+    @Before
+    fun before() {
+        System.setOut(mockPrintStream)
+    }
+
+    @After
+    fun after() {
+        printStreamByteArray.reset()
+        System.setOut(consolePrintStream)
     }
 
     @Test
-    fun originalImplementationWithAnotherExpectedTest() {
-        val result = doWithMockOutStream {
-            runBlocking {
-                originalImplementation()
-            }
-        }
-        Assert.assertEquals(expectedForWrongImpl(), result)
+    fun originalCounterTest() = runTest {
+        OriginCounter(this)
+            .increaseCounterAndPrintAsync()
+        val result = printStreamByteArray.toString()
+        Assert.assertEquals(expectedForOriginalImpl(), result)
     }
 
     @Test
-    fun fixedImplementationTest() {
-        val result = doWithMockOutStream {
-            runBlocking {
-                fixedImplementation(delayInMillis = 10)
-            }
-        }
-        Assert.assertEquals(expectedForWorkImpl(), result)
+    fun mutexCounterTest() = runTest {
+        MutexCounter(this)
+            .increaseCounterAndPrintAsync()
+        val result = printStreamByteArray.toString()
+        Assert.assertEquals(expectedForMutexImpl(), result)
     }
 
-    private fun expectedForWorkImpl(): String {
-        val expected = StringBuilder()
-        for (i in 0 until 200 step 2) {
-            expected.append("$i and ${i + 1}\n")
-        }
-        return expected.toString()
-    }
-
-    private fun expectedForWrongImpl(): String {
+    private fun expectedForOriginalImpl(): String {
         val expected = StringBuilder()
         for (i in 0 until 100) {
             expected.append("$i and ${i + 100}\n")
@@ -91,12 +102,11 @@ class CoroutinesExampleUnitTest {
         return expected.toString()
     }
 
-    private fun doWithMockOutStream(action: () -> Unit): String {
-        val consoleStream = System.out
-        val byteArrayOutStream = ByteArrayOutputStream()
-        System.setOut(PrintStream(byteArrayOutStream))
-        action.invoke()
-        System.setOut(consoleStream)
-        return byteArrayOutStream.toString()
+    private fun expectedForMutexImpl(): String {
+        val expected = StringBuilder()
+        for (i in 0 until 200 step 2) {
+            expected.append("$i and ${i + 1}\n")
+        }
+        return expected.toString()
     }
 }
