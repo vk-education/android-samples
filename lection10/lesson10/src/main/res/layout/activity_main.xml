@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="40dp">
+
+
+    <Button
+        android:id="@+id/button_simple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/simple_name"/>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edit_message"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
+
+
+        <Button
+            android:id="@+id/button_send"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/message_name"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/button_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/big_image"/>
+
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/button_ongoing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ongoing"/>
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/button_clear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/clear"/>
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/button_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/service"/>
+
+
+</LinearLayout>
