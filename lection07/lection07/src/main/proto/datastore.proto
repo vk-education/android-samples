@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_package = "com.vkeducation.lection07";
+option java_multiple_files = true;
+
+message ProtoDataStore {
+  bool checkBox = 1;
+  string editStr = 2;
+  int32 seekBar = 3;
+  float editFloat = 4;
+}

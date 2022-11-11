@@ -1,0 +1,2 @@
+rootProject.name = "Lection07"
+include ':lection07'
