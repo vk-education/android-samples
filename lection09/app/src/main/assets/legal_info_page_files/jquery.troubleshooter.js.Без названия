@@ -1,0 +1,108 @@
+/**
+ *  Инициализация трабблшутера
+ *  @require 'jquery.js'
+ */
+(function ($, window) {
+	"use strict";
+	var troubleshooter;
+
+	var sels = {
+		form:     '.js-form',
+		wrapper:  '.js-troubleshooter',
+		link:     '.js-troubleshooter__link',
+		item:     '.js-troubleshooter__item',
+		content:  '.js-troubleshooter__content'
+	};
+	var clss = {
+		activeItem: 'h-troubleshooter__item_current',
+		activeLink: 'h-troubleshooter__link_current',
+		hiddenItem: 'h-troubleshooter__item_hidden',
+		hiddenLink: 'h-troubleshooter__link_hidden',
+        firstItem:  'h-troubleshooter__item_first'
+	};
+	var attrs = {
+		ajaxUrl: 'data-ajax',
+		displayUrl: 'data-display-url'
+	};
+
+		$(window.document).on('click', sels.link, function (event) {
+			var link = $(this);
+			var ajaxUrl = link.attr(attrs.ajaxUrl);
+			var displayUrl = link.attr(attrs.displayUrl);
+			var item = link.parent();
+            var parentId = item.attr("id");
+			var siblingsItems = item.siblings().filter(sels.item);
+            var contentItems = siblingsItems.filter(sels.content);
+			var container;
+            siblingsItems.each(clearSubItem);
+
+            for (var i = 0; i < contentItems.length; i++) {
+                if (contentItems[i].id === parentId) {
+                    var contItem = contentItems[i];
+                    container = $(contItem).find(sels.content);
+                    break;
+                }
+            }
+
+			var toggleStatus = link.hasClass(clss.activeLink);
+			var state;
+			
+			if (!ajaxUrl) {
+				return;
+			};
+			
+			if (!toggleStatus) {
+				getData (ajaxUrl,container);
+				state = {
+					thisIsOnPopState: true
+				};
+				window.history.pushState(state, '', displayUrl || ajaxUrl);
+                $(container).toggleClass(clss.firstItem, true);
+			} else {
+                $(container).toggleClass(clss.firstItem, false);
+				container.empty();
+			}
+			link.toggleClass(clss.activeLink,!toggleStatus);
+            link.toggleClass(clss.activeItem,!toggleStatus);
+            for (var i = 0; i < siblingsItems.length; i++) {
+                var siblingItem = siblingsItems[i];
+                $(siblingItem).find(sels.link).toggleClass(clss.activeItem, !toggleStatus);
+            }
+
+			event.preventDefault();
+		});
+	
+	function clearSubItem (toggleStatus) { 
+		var el = $(this);
+
+		el.find(sels.link).toggleClass(clss.activeLink,false);
+        el.find(sels.content).toggleClass(clss.firstItem, false);
+        el.find(sels.content).empty();
+	}
+	
+	function errorContent (container) { 
+		container.html('<div class="b-form__errors"><div class="b-form__errors__error">Ошибка сервера, попробуйте позже</div></div>');
+	}
+
+	function getData (url,container) { // запрос для html формы
+		  $.ajax({
+				url: url,
+				dataType: 'text',
+				error: function( ) {
+					errorContent (container)
+				},
+				success: function( data ) {
+					var $data;
+					
+					if (data) {
+						$data = $(data);
+						container.html($data);
+						$data.find(sels.form).helpFormInit();
+					 } else {
+						errorContent (container)
+					 }
+				}
+		  });
+	}
+
+})(jQuery, this);

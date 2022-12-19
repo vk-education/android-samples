@@ -1,0 +1,323 @@
+(function ($, window) {
+	var form;
+	var PH = window.__PH || {};
+
+	var sels = {
+		form:         '.js-form',
+		input:        '.js-form__input',
+		inputWrapper: '.js-form__input-wrapper',
+		inputMessage: '.js-form__input-message',
+		messageCount: '.js-form__message-count',
+		error:        '.js-form__input-error',
+		file: {
+			input:             '.js-form__file',
+			inputWrapper:      '.js-form__file-wrapper',
+			attachementsCount: '.js-form__file-attachements-count',
+			attachementsText:  '.js-form__file-text'
+		},
+		password: {
+			input:        '.js-form__password',
+			inputWrapper: '.js-form__password-wrapper',
+			close:        '.js-form__password-close',
+			btn:          '.js-form__password-btn',
+			eye:          '.js-form__password-eye'
+		},
+		emailInput:  '.js-form__email__input',
+		emailSelect: '.js-form__email__select'
+	};
+
+	var clss = {
+		hidden:          'hidden',
+		error:           'b-form-field__errors__error_visible',
+		errorWrapper:    'b-form-field_invalid',
+		passwordEyeOpen: 'b-password__eye_active'
+	};
+
+	var attrs = {
+		submitUrl:    'data-ajax',
+		required:     'data-required',
+		messageCount: 'data-message-count',
+		validateMask: 'data-validate-mask'
+
+	};
+
+	/*
+
+	==============================
+	*/
+
+	function validateField(event){
+		var input = $(this);
+		var val;
+		var inputWrapper;
+		var errorCont;
+		var mask = input.attr(attrs.validateMask);
+		var required=input.attr(attrs.required);
+
+		if(!required && !mask){
+			return;
+		}
+		inputWrapper = input.parents(sels.inputWrapper);
+		errorCont = inputWrapper.find(sels.error);
+		val=input.val();
+		var expr = new RegExp(mask);
+
+		if((!val && !required) || (val && expr.test(val))){
+			inputWrapper.removeClass(clss.errorWrapper);
+			errorCont.removeClass(clss.error);
+
+			return;
+		} else {
+			inputWrapper.addClass(clss.errorWrapper);
+			errorCont.addClass(clss.error);
+
+			return;
+		}
+	}
+
+	/*
+
+	==============================
+	*/
+	function formSubmit (event) {
+		var $form = $(event.target);
+		var queryString = $form.attr(attrs.submitUrl);
+		var screenResolution = this['fb.screen_resolution'];
+		var wrongFields;
+		var messageCount = $form.find(sels.inputMessage);
+		var attachementsCount = $form.find(sels.file.attachementsCount);
+		var submitEventParams = { url: location.href };
+		var symbols = 0;
+		var attachment = false;
+		if (messageCount.length) {
+			symbols = messageCount[0].value.length;
+		}
+		if (attachementsCount.length) {
+			attachment = attachementsCount[0].value > 1;
+		}
+		var submitEventParams = { url: location.href, symbols: symbols, attachment: attachment };
+		$form.find(sels.input).each(validateField);
+		wrongFields = $form.find('.' + clss.errorWrapper);
+
+		var date = new Date().toString();
+		$form.find('input[name="fb.client_date"]').val(date);
+        
+		if(wrongFields.length){
+			$('html, body').animate({scrollTop: wrongFields.first().offset().top}, 400);
+			event.preventDefault();
+		} else {
+			if (screenResolution && window.screen.width)
+				screenResolution.value = window.screen.width + 'x' + window.screen.height;
+
+			var _tmr = window._tmr || (window._tmr = []);
+        	_tmr.push({ id: '1300870', type: 'reachGoal', goal: 'Trouble_Other_Problem', params: submitEventParams});
+			if (queryString) {
+				event.preventDefault();
+				$(this).ajaxSubmit({
+					url: queryString,
+					dataType: "html",
+					target: $form.parent(),
+					success: function(data){
+						console.log("success");
+						$form.parent().html(data);
+					}
+				});
+			}
+		}
+	};
+
+	/*
+
+	==============================
+	*/
+	function emailWithSelect(event) {
+		var emailInput = $(this);
+
+		var inputWrapper = emailInput.parents(sels.inputWrapper);
+		var emailSelect = inputWrapper.find(sels.emailSelect);
+		var email = emailInput.val() || PH.activeUser();
+		var userName;
+		var domainsEl;
+
+		if(email){
+			if (!email.match(/(^[^@]+)@(.+)$/)) {
+				emailSelect.parents('.b-email__domain').removeClass(clss.hidden);
+				return;
+			}
+		}
+
+		var userName = RegExp.$1;
+		var userDomain = RegExp.$2;
+
+		var domainsEl = emailSelect.get(0);
+		if(domainsEl && domainsEl.length){
+			for (var i = 0; i < domainsEl.options.length; i++) {
+				if (domainsEl[i].value != userDomain) continue;
+				emailInput.val(userName);
+				domainsEl[i].selected = true;
+
+				emailSelect.parents('.b-email__domain').removeClass(clss.hidden);
+				break;
+			}
+		}
+	}
+
+	/*
+
+	==============================
+	*/
+	function messageUpdateSymbolsCounter(event) {
+		var textarea = $(this);
+		var textareaWrapper = $(this).parents(attrs.inputWrapper);
+		var maxMessageCount = textarea.attr(attrs.messageCount);
+		var messageCount = this.value.length;
+		var messageCont = textareaWrapper.find(sels.messageCount);
+		var errorCont = textareaWrapper.find(sels.error);
+
+		var count = maxMessageCount - messageCount;
+
+		messageCont.html(count);
+	};
+
+	/*
+
+	==============================
+	*/
+	function fileChange(event) {
+		var input = $(this);
+		var inputWrapper = input.parents(sels.inputWrapper);
+		var attachementsCount = inputWrapper.find(sels.file.attachementsCount);
+		var fileWrapper = input.parents(sels.file.inputWrapper);
+		var attachementsText = fileWrapper.find(sels.file.attachementsText);
+		var nextField;
+
+		var fileName = input.val();
+		attachementsText.text(getFileName(fileName));
+
+		if(!fileWrapper.hasClass('notlast')) {
+			nextField = fileWrapper.clone();
+			nextField.find(sels.file.input).val('');
+			nextField.find(sels.file.attachementsText).html('');
+			nextField.insertAfter(fileWrapper);
+			fileWrapper.addClass('notlast');
+			attachementsCount.val(Math.floor(attachementsCount.val())+1);
+		}
+
+		function getFileName(str) {
+			if (str.lastIndexOf('\\')){
+				var i = str.lastIndexOf('\\')+1;
+			 }
+			 else{
+				var i = str.lastIndexOf('/')+1;
+			 }
+			 return str.slice(i);
+		};
+	}
+
+	/*
+
+	==============================
+	*/
+	function passwordClearField (event) {
+		var btn = $(this);
+		var passwordWrapper = btn.parents(sels.inputWrapper);
+		passwordWrapper.remove();
+
+		event.preventDefault();
+	}
+
+	/*
+
+	==============================
+	*/
+	function passwordAddField (event) {
+		var btn = $(this);
+		var inputWrapper = btn.parents(sels.password.inputWrapper);
+		var passwordWrapper = inputWrapper.find(sels.inputWrapper).last();
+
+		var newPassword = passwordWrapper.clone();
+		newPassword.find(sels.password.input).val('');
+		newPassword.removeClass(clss.errorWrapper);
+		newPassword.find(sels.error).removeClass(clss.error);
+		newPassword.find(sels.password.close).removeClass(clss.hidden);
+
+		passwordWrapper.after($(newPassword));
+		event.preventDefault();
+	}
+
+	/*
+
+	==============================
+	*/
+	function passwordToggleView (event) {
+		var eye = $(this);
+		var passwordWrapper = eye.parents(sels.inputWrapper);
+		var input = passwordWrapper.find(sels.password.input);
+
+		eye.toggleClass(clss.passwordEyeOpen);
+		var isOpen = !!eye.hasClass(clss.passwordEyeOpen);
+
+		input.attr('type',isOpen ? 'text': 'password');
+
+		event.preventDefault();
+	}
+
+
+	/*
+
+	==============================
+	==============================
+	*/
+
+	$(document).on("change", sels.input,          validateField);
+//	$(document).on("blur",   sels.input,          validateField); // как-то стремновато выглядит. не стоит ;(
+//	$(document).on("change", sels.emailInput,     emailWithSelect);
+	$(document).on("change", sels.file.input,     fileChange);
+	$(document).on("keyup",  sels.inputMessage,   messageUpdateSymbolsCounter);
+	$(document).on("click",  sels.password.close, passwordClearField);
+	$(document).on("click",  sels.password.btn,   passwordAddField);
+	$(document).on("click",  sels.password.eye,   passwordToggleView);
+
+
+	// Разрешить ввод только определенных символов в поля с атрибутом "data-enabled-keys"
+	$(document).on("keypress", "input[data-enabled-keys]", function(e){
+		 if(e.which < 32){return true;}
+		 var r = new RegExp($(this).attr("data-enabled-keys"),"i");
+		 return r.test(e.key);
+	});
+
+	$(document).on("submit", sels.form, formSubmit);
+
+
+	/*
+
+	==============================
+	==============================
+	*/
+	$.fn.extend({
+		helpFormInit: function() {
+			return this.each(function() {
+
+				var $form = $(this);
+
+				$form.find(sels.emailInput).each(emailWithSelect);
+				$form.find(sels.inputMessage).each(messageUpdateSymbolsCounter);
+
+				$form.find(".js-select2").select2({
+					minimumResultsForSearch: 10
+				});
+				$form.find(".js-select-email").select2({
+					minimumResultsForSearch: -1
+				});
+			});
+		}
+	});
+
+	/*
+
+	==============================
+	*/
+
+	$(sels.form).helpFormInit();
+
+})(jQuery, this);

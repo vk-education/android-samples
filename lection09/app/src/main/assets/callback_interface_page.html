@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript">
+			function showAndroidDialog(message) { AndroidInterface.showDialog(message); }
+			function showAndroidToast(message) { AndroidInterface.showToast(message); }
+
+			function changeBackgroundColor(color) {
+				document.body.style.setProperty("background-color", color);
+			}
+
+			function getSwapiPeoples() {
+			    var xmlHttp = new XMLHttpRequest();
+				xmlHttp.open( "GET", 'https://swapi.dev/api/people/1/', false ); // false for synchronous request
+				xmlHttp.send( null );
+
+				return xmlHttp.responseText;
+			}
+		</script>
+	</head>
+
+	<body>
+		<div><input type="button" value="Hello Toast" onClick="showAndroidToast('Hello Toast')" /></div>
+		<div><input type="button" value="Hello Dialog" onClick="showAndroidDialog('Hello Dialog')" /></div>
+	</body>
+</html>

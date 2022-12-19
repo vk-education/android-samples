@@ -1,0 +1,217 @@
+/* global $ MailRuWebviewInterface */
+$(document).ready(function() {
+	// https://jira.mail.ru/browse/FMAIL-5374
+	// https://jira.mail.ru/browse/FMAIL-11555
+	// https://jira.mail.ru/browse/CLOUDWEB-12430
+
+	var URLParse = window.URLParse;
+	var sentMeAdsCookieName = 'sent_ads';
+	var sentMeAdsWebViewEvent = 'SEND_ME_ADS_TOGGLED';
+	var sentMeAdsCommonCookieName = 'sent_ads_common';
+	var sentMeAdsCommonWebViewEvent = 'SEND_ME_ADS_COMMON_TOGGLED';
+	var sentMeAdsCloudCookieName = 'sent_ads_cloud';
+	var sentMeAdsCloudWebViewEvent = 'SEND_ME_ADS_COMMON_TOGGLED';
+
+	function extractQueryParam (href, name) {
+		var parsed = URLParse(href, true);
+		return parsed.query[name];
+	}
+
+	function appendQueryParam (href, name, value) {
+		var parsed = URLParse(href, true);
+		parsed.query[name] = value;
+
+		return parsed.toString();
+	}
+
+	/**
+	 * @param {string} name
+	 * @param {string} postfix
+	 * @return {boolean}
+	 */
+	function getBooleanCookie(name, postfix) {
+		var cookieValues = window.document.cookie.match('(^|[^;]+)\\s*' + name + '_' + postfix + '\\s*=\\s*([^;]+)');
+		var extracted = cookieValues ? cookieValues.pop() : '';
+		switch (extracted) {
+			case 'false':
+				return false;
+			case 'true':
+			default:
+				return true;
+		}
+	}
+
+	/**
+	 * @param {string} name
+	 * @return {string | null}
+	 */
+	function getCookie(name) {
+		var matchArray = window.document.cookie.match('(?:^|[^;]+)\\s*' + name + '\\s*=\\s*([^;]+)');
+		return matchArray ? matchArray.pop() : null;
+	}
+
+	/**
+	 * @param {string} name
+	 * @param {string} postfix
+	 * @param {'true'|'false'} value
+	 */
+	function setBooleanCookie(name, postfix, value) {
+		document.cookie = name + '_' + postfix + '=' + value + '; domain=.mail.ru; path=/;';
+	}
+
+	/**
+	 * @param {jQuery} $checkbox
+	 * @param {string} cookieName
+	 * @param {string} signupid
+	 * @param {string} webViewEvent
+	 */
+	function syncCheckboxWithCookie($checkbox, cookieName, signupid, webViewEvent) {
+		var initialValue = getBooleanCookie(cookieName, signupid);
+		$checkbox.removeAttr('disabled');
+
+		if (String(initialValue) === 'true') {
+			$checkbox.attr('checked', 'checked');
+		} else {
+			$checkbox.removeAttr('checked');
+		}
+
+		$checkbox.change(function () {
+			var currentChecked = !!this.checked;
+			setBooleanCookie(cookieName, signupid, String(currentChecked));
+			if (typeof MailRuWebviewInterface !== 'undefined') {
+				try {
+					MailRuWebviewInterface.event(webViewEvent, JSON.stringify({ "value": currentChecked }));
+				} catch (e) {
+					// ignore;
+				}
+			}
+		});
+	}
+
+	/**
+	 * @param {jQuery} $checkbox
+	 * @param {string} accessToken
+	 * @param {string} fieldName
+	 */
+	function syncCheckboxWithUserApi($checkbox, accessToken, fieldName) {
+		var baseUrl = extractQueryParam(window.location.href, 'branchapi') === '1' ?
+			'https://branch-corsapi.imgsmail.ru/api/v1/' :
+			'https://corsapi.imgsmail.ru/api/v1/';
+		var getUserUrl = appendQueryParam(baseUrl + 'user/help-mail-ru', 'access_token', accessToken);
+
+		$.ajax(getUserUrl, {
+			dataType: 'json',
+			crossDomain: true,
+			complete: function (jqXHR, textStatus) {
+				if (textStatus !== 'success' || !jqXHR.responseJSON || jqXHR.responseJSON.status !== 200 || !jqXHR.responseJSON.body) {
+					return;
+				}
+
+				var agreements = jqXHR.responseJSON.body.agreements || {};
+				var initialValue = agreements[fieldName];
+
+				$checkbox.removeAttr('disabled');
+
+				if (String(initialValue) === 'true') {
+					$checkbox.attr('checked', 'checked');
+				} else {
+					$checkbox.removeAttr('checked');
+				}
+
+				var editUserBaseUrl = appendQueryParam(baseUrl + 'user/edit/help-mail-ru', 'access_token', accessToken);
+
+				$checkbox.change(function () {
+					var currentChecked = !!this.checked;
+
+					$.ajax(editUserBaseUrl, {
+						dataType: 'json',
+						contentType: 'application/json; charset=utf-8',
+						method: 'post',
+						crossDomain: true,
+						data: JSON.stringify({
+							agreements: {
+								[fieldName]: currentChecked
+							}
+						}),
+						complete: function (jqXHR, textStatus) {
+							if (textStatus !== 'success') {
+								return;
+							}
+						}
+					});
+				});
+			}
+		});
+	}
+
+	var signupid = (extractQueryParam(window.location.href, 'signupid') || getCookie('signupid') || '')
+		.replace(/[^0-9a-z]/gi, '')
+		.slice(0, 36);
+
+	if (signupid) {
+		$(document).on('click', 'a', function (evt) {
+			evt.preventDefault();
+
+			var $link = $(this);
+			var originalHref = $link.attr('href');
+			window.location = appendQueryParam(originalHref, 'signupid', signupid);
+		});
+	}
+
+	function findCheckboxAndHandleChange() {
+		var $sentMeAdsCheckbox = $('#sent_me_ads');
+		var $sentMeAdsCommonCheckbox = $('#sent_me_ads_common');
+		var $sentMeAdsCloudCheckbox = $('#sent_me_ads_cloud');
+		var MR = window.MR;
+		var clientId = '36ee693610a344929218133291cd27ca';
+		var noAnyCheckbox = !$sentMeAdsCheckbox.length && !$sentMeAdsCommonCheckbox.length && !$sentMeAdsCloudCheckbox.length;
+
+		if (noAnyCheckbox || typeof MR === 'undefined') {
+			return;
+		}
+
+		if (signupid) {
+			// пользователь регистрирует ящик
+			if ($sentMeAdsCheckbox.length) {
+				syncCheckboxWithCookie($sentMeAdsCheckbox, sentMeAdsCookieName, signupid, sentMeAdsWebViewEvent);
+			}
+
+			if ($sentMeAdsCommonCheckbox.length) {
+				syncCheckboxWithCookie($sentMeAdsCommonCheckbox, sentMeAdsCommonCookieName, signupid, sentMeAdsCommonWebViewEvent);
+			}
+
+			if ($sentMeAdsCloudCheckbox.length) {
+				syncCheckboxWithCookie($sentMeAdsCloudCheckbox, sentMeAdsCloudCookieName, signupid, sentMeAdsCloudWebViewEvent);
+			}
+		} else {
+			// проверяем, авторизован ли пользователь
+			MR.init({clientId: clientId});
+
+			MR.auth(function (authstate) {
+				if (authstate.status === 'connected' && authstate.access_token) {
+					var access_token = authstate.access_token;
+
+					if ($sentMeAdsCheckbox.length) {
+						syncCheckboxWithUserApi($sentMeAdsCheckbox, access_token, 'mail');
+					}
+
+					if ($sentMeAdsCommonCheckbox.length) {
+						syncCheckboxWithUserApi($sentMeAdsCommonCheckbox, access_token, 'common');
+					}
+
+					if ($sentMeAdsCloudCheckbox.length) {
+						syncCheckboxWithUserApi($sentMeAdsCloudCheckbox, access_token, 'cloud');
+					}
+				}
+			});
+		}
+
+	}
+
+	(function () {
+		findCheckboxAndHandleChange();
+
+		window.findCheckboxAndHandleChange = findCheckboxAndHandleChange;
+	})()
+
+});

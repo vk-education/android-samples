@@ -1,0 +1,70 @@
+// Poll
+function PollSubmit(poll_block, data){
+	$.post("/poll/", data, function(Res){
+		$(poll_block).find(".PollMainPanel").remove();
+		$(poll_block).find(".PollDetailes").remove();
+		$(poll_block).find(".PollResultThanks").removeClass("hidden");
+	}).fail(function() {
+		$(poll_block).find(".PollButtonsPanel").remove();
+		$(poll_block).find(".PollDetailes").remove();
+		$(poll_block).find(".PollResultError").removeClass("hidden");
+	});
+    var messageCount = poll_block.find('.js-poll_form__input-message');
+    var symbols = 0;
+    if (messageCount.length) {  
+        symbols = messageCount[0].value.length;
+    }
+    var problem = poll_block.find('.b-radiogroup__item_checked .b-radiogroup__text-wrap').html();
+    var submitEventParams = { url: location.href, symbols: symbols, problem: problem };
+    var _tmr = window._tmr || (window._tmr = []);
+    _tmr.push({ id: '1300870', type: 'reachGoal', goal: 'Survey_Negative_Answer_Detail', params: submitEventParams});
+}
+$(document).on("click",".PollButton",function(){
+	var poll_block = $(this).parents(".Poll");
+	PollSubmit(poll_block, $(this).data());
+});
+$(document).on("click",".PollDetailesCancel",function(){
+        $(this).parents(".Poll").find(".PollDetailes").addClass("hidden");
+	$(this).parents(".Poll").find(".PollDetailsButton").show();
+	$(this).parents(".Poll").find(".PollMainPanel").show();
+	return false;
+});
+$(document).on("submit",".PollForm",function(){
+	var poll_block = $(this).parents(".Poll");
+	PollSubmit(poll_block, $(this).serialize());
+	return false;
+});
+$(document).on("click",".PollDetailsButton",function(){
+	$(this).parents(".Poll").find(".PollDetailes").removeClass("hidden");
+	$(this).parents(".Poll").find(".PollMainPanel").hide();
+    $(this).hide();
+    var _tmr = window._tmr || (window._tmr = []);
+    _tmr.push({ id: '1300870', type: 'reachGoal', goal: 'Survey_Negative_Answer', params: { url: location.href }});
+});
+
+
+(function ($, window) {
+    var sels = {
+        inputWrapper: '.js-poll_form__input-wrapper',
+        inputMessage: '.js-poll_form__input-message',
+        messageCount: '.js-poll_form__message-count',
+    };
+
+    var attrs = {
+        messageCount: 'data-message-count',
+    };
+
+    function messageUpdateSymbolsCounter(event) {
+        var textarea = $(this);
+        var textareaWrapper = $(this).parents(attrs.inputWrapper);
+        var maxMessageCount = textarea.attr(attrs.messageCount);
+        var messageCount = this.value.length;
+        var messageCont = textareaWrapper.find(sels.messageCount);
+        var count = maxMessageCount - messageCount;
+ 
+        messageCont.html(count);
+    };
+
+    $(document).on("keyup",  sels.inputMessage,   messageUpdateSymbolsCounter);
+})(jQuery, this);
+

@@ -1,0 +1,71 @@
+/*
+* sidebar-toggle
+*/
+
+(function($, window){
+    var $body = $('body');
+  
+    $body.on('click', '.NodeSidebarItem', function(event) {
+      var $link = $(this);
+      var $parent = $link.parent();
+
+      var target = $( event.target );
+      var isArrow = target.is(".sidebar-left__icon") || target.parents(".sidebar-left__icon").length
+
+      if ($link.hasClass('js-link-not-self') && !isArrow) {
+          return;
+      }
+
+      if ($parent.is('.-open')) {
+        if (isArrow) {
+           $parent.removeClass('-open');
+           $parent.find('> ul').slideUp();
+        }
+      } else {
+        $parent.addClass('-open');
+        $parent.find('> ul').slideDown();
+        $parent.siblings().removeClass('-open').find('> ul').slideUp();
+      }
+
+      if (isArrow) {
+           event.preventDefault();
+           return;
+      } 
+      
+      $body.find('.NodeSidebarItem').parent().removeClass('-active');
+      $parent.addClass('-active');
+     
+      var url =  $link.attr("href");
+      var container = $("div.ArticleContentContainer");
+      getData("/ajax" + url, container);
+      window.history.pushState(null, '', url);
+      document.title = $link.attr("data-node-title");
+
+      event.preventDefault();
+     });
+
+ 
+    function getData (url,container) {
+      $.ajax({
+        url: url,
+        dataType: 'text',
+        success: function( data ) {
+          var $data;
+
+          if (data) {
+            $data = $(data);
+            container.empty();
+            container.html($data);
+            if (window.findCheckboxAndHandleChange) {
+              window.findCheckboxAndHandleChange();
+            }
+          }
+        }
+      });
+    }
+
+    window.addEventListener('popstate', function(e){
+      location.reload();
+    });
+
+  })(jQuery, this);

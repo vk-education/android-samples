@@ -1,0 +1,16 @@
+
+(function(){  
+    $(document).on('click', '[data-target="article-tabs"]', function(event) {
+        var $link = $(this);
+        $item = $link.parent();
+        type = $link.data('type');
+  
+        if (type === "article-accordion") {
+            $item.toggleClass('-active');
+        } else {
+            $item.addClass('-active').siblings().removeClass('-active');;
+        }
+        event.preventDefault();
+    });
+})();
+  

@@ -1,0 +1,37 @@
+/**
+ *  Инициализация основных модулей
+ *  @require 'jquery.js'
+ */
+(function ($, window) {
+	"use strict";
+	var toggleWrapper;
+
+	var sels = {
+		toggle: {
+			wrapper: '.js-toggle',
+			item: '.js-toggle__item',
+			link: '.js-toggle__link'
+		}
+	};
+	var clss = {
+		toggle: {
+			collapsed: 'h-nav__item_collapsed'
+		}
+	};
+	var attrs = {
+		toggle: {
+			collapsed: 'data-collapsed'
+		}
+	};
+
+	// Тогглер
+	if ((toggleWrapper = $(sels.toggle.wrapper)).length) {
+		$(window.document).on('click', sels.toggle.link, function (event) {
+			var item = $(event.target).parents(sels.toggle.item);
+			var collapsedClass = item.attr(attrs.toggle.collapsed) || clss.toggle.collapsed;
+			event.preventDefault();
+			item.toggleClass(collapsedClass);
+		});
+	}
+
+})(jQuery, this);

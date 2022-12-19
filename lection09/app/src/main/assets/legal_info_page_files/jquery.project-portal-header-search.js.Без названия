@@ -1,0 +1,140 @@
+/*
+* search
+*/
+
+(function(){
+  var $body = $('body'),
+      $searchForm = $('[data-mail-project-portal-header-search]'),
+      $searchDropdown = $('[data-mail-project-portal-header-search-dropdown]')
+  ;
+  var $topSuggestBlock = 'TopSuggestBlock';
+  var $searchMailSuggestBlock = 'SearchMailSuggestBlock';
+
+  $searchForm.on ('focus', 'input', (function(){
+    var $form = $(this).closest('form');
+
+    $form.addClass('-focus');
+    var topSuggest = document.getElementById($topSuggestBlock);
+    $(topSuggest).removeClass('suggest-hide');
+    var searchSuggest = document.getElementById($searchMailSuggestBlock);
+    $(searchSuggest).addClass('suggest-hide');
+  }));
+
+  $searchForm.on ('click', '[data-mail-project-portal-header-search-target="clear"]', (function(event){
+    var $field = $(this),
+        $form = $field.closest('form')
+    ;
+    $form[0].reset();
+    $form.removeClass('-focus');
+    event.preventDefault();
+  }));
+
+  $searchForm.on ('click', '[data-mail-project-portal-header-search-dropdown-link]', (function(event){
+    var $link = $(this),
+        $input = $link.closest('form').find('input')
+    ;
+    //$input.val($link.text());
+    
+    location.href = this.getAttribute('data-mail-project-portal-header-search-dropdown-link');
+
+    event.preventDefault();
+  }));
+
+  $searchForm.on('keydown', function(event) {
+    var items = $searchForm.find('[data-mail-project-portal-header-search-dropdown-link]'),
+        firstItem = $searchForm.find('[data-mail-project-portal-header-search-dropdown-link]:first'),
+        lastItem = $searchForm.find('[data-mail-project-portal-header-search-dropdown-link]:last'),
+        selectedItem = $searchForm.find('[data-mail-project-portal-header-search-dropdown] .-active'),
+        isStart = false;
+    ;
+
+    function move() {
+      selectedItem.addClass('-active').siblings().removeClass('-active');
+
+      if (items.index(selectedItem) === 0 ) {
+        $searchDropdown.scrollTop(0);
+      }
+
+      if (items.index(selectedItem) === (items.length - 1) ) {
+        $searchDropdown.scrollTop($searchDropdown.height());
+      }
+
+      if (selectedItem.position().top > 200 && items.index(selectedItem) !== 0 ) {
+        $searchDropdown.scrollTop($searchDropdown.scrollTop() + 40);
+      } else {
+
+        if (selectedItem.position().top < 0) {
+          $searchDropdown.scrollTop($searchDropdown.scrollTop() - 40);
+        }
+      }
+    }
+
+    if (event.keyCode === 40) { //arrow dowm
+      if (!selectedItem.length) {
+        selectedItem = firstItem;
+        selectedItem.addClass('-active');
+        isStart = true;
+      }
+
+      if (items.index(selectedItem) !== (items.length - 1)) {
+        selectedItem = selectedItem.next();
+      } else {
+        selectedItem = firstItem;
+      }
+
+      if (!isStart) {
+        move();
+      }
+      event.preventDefault();
+    }
+
+    if (event.keyCode === 38) { //arrow up
+      if (!selectedItem.length) {
+        selectedItem = lastItem;
+        selectedItem.addClass('-active');
+        $searchDropdown.scrollTop($searchDropdown.height());
+        isStart = true;
+      }
+
+      if (items.index(selectedItem) !== 0) {
+        selectedItem = selectedItem.prev();
+      } else {
+        selectedItem = lastItem;
+      }
+
+      if (!isStart) {
+        move();
+      }
+      event.preventDefault();
+    }
+
+    if (event.keyCode === 13) { //arrow enter
+      if (!selectedItem.length) {
+          return;
+          event.preventDefault();
+      }
+//      $searchForm.find('input').val(selectedItem.text());
+      location.href = selectedItem[0].getAttribute('data-mail-project-portal-header-search-dropdown-link');
+      event.preventDefault();
+    }
+
+     if (event.keyCode === 27) { //arrow esc
+         $form = $searchForm.closest('form')
+         $form[0].reset();
+         $form.removeClass('-focus');
+         $form.find('input').blur();
+         event.preventDefault();
+     } 
+  });
+
+  $body.on('click', '.js-help-main-body', function(event) {
+    var elClick = $(event.target),
+        isSearchBox = !!elClick.parents('[data-mail-project-portal-header-search]').length
+    ;
+
+    if (!isSearchBox && $searchForm.is('.-focus')) {
+      $searchForm.removeClass('-focus');
+    }
+  });
+
+})();
