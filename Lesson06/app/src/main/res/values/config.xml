@@ -1,0 +1,3 @@
+<resources>
+    <string name="base_url">https://rickandmortyapi.com/api/</string>
+</resources>
