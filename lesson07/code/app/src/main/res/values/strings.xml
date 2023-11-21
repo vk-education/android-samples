@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Lesson07</string>
+    <string name="caption_new_plate">Create Plate</string>
+    <string name="caption_add_plate">Add Plate</string>
+    <string name="caption_clear_plates">Clear plates</string>
+</resources>
