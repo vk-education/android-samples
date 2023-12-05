@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".presentationlayer.MainActivity"
+    >
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:paddingVertical="32dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        >
+        <Button
+            android:id="@+id/simple_notification"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="Simple Notification"
+            />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            />
+        <Button
+            android:id="@+id/background_service"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="Background Service Toast"
+            />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            />
+        <Button
+            android:id="@+id/foreground_service_start"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="Foreground Service Start"
+            />
+        <Button
+            android:id="@+id/foreground_service_stop"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="Foreground Service Stop"
+            />
+        <Button
+            android:id="@+id/foreground_service_destroy"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="Foreground Service Destroy"
+            />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            />
+        <Button
+            android:id="@+id/bound_service_toast"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="Bound Service Toast"
+            />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            />
+        <Button
+            android:id="@+id/job_scheduler_start"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="Job Scheduler Start"
+            />
+        <Button
+            android:id="@+id/job_scheduler_stop"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="Job Scheduler Stop"
+            />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            />
+        <Button
+            android:id="@+id/work_manager_start"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="Work Manager Start"
+            />
+        <Button
+            android:id="@+id/work_manager_stop"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="Work Manager Stop"
+            />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            />
+        <Button
+            android:id="@+id/alarm_manager_start"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="Alarm Manager Start"
+            />
+        <Button
+            android:id="@+id/alarm_manager_stop"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="Alarm Manager Stop"
+            />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</ScrollView>
