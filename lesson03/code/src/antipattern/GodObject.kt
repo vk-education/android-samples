@@ -1,0 +1,4 @@
+package antipattern
+
+class GodObject {
+}
