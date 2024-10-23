@@ -28,7 +28,7 @@
 
 - [**Navigation compose**](https://medium.com/@KaushalVasava/navigation-in-jetpack-compose-full-guide-beginner-to-advanced-950c1133740) (Medium, доступ только с VPN)
 
-Большой гайд по инструменту для навигации от google – navigation-compose. Рассматривется передача параметров, вложенная навигация и диплинки.
+Большой гайд по инструменту для навигации от google – navigation-compose. Рассматривается передача параметров, вложенная навигация и диплинки.
 
 # Основные моменты лекции
 
@@ -42,13 +42,13 @@ Composable-функции можно вызывать только из друг
 
 ## Layouts
 
-[Layouts.kt](app/src/main/java/com/example/compose_sample/layout/Layouts.kt)
+[Layouts.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/layout/Layouts.kt)
 
 ### Box
 
 **`Box`** – layout, контейнер, который может располагать элементы в произвольном порядке в соответствии с переданным `Alignment`.
 
-Alignment можно передать сразу в Box (параметр `contentAlignment`), а можно применить для конретного элемента с помощью `Modifier.align()`.
+Alignment можно передать сразу в Box (параметр `contentAlignment`), а можно применить для конкретного элемента с помощью `Modifier.align()`.
 
 ### Column
 
@@ -56,7 +56,7 @@ Alignment можно передать сразу в Box (параметр `conte
 
 Column, по аналогии с Box, разрешает нам настраивать горизонтальный alignment у каждого элемента, то есть то, как будет располагаться элемент по горизонтали: справа, по центру или слева. Для одного элемента это можно сделать с помощью `Modifier.align()`, либо можно передать параметр `horizontalAlignment` в `Column`, таким образом настроив положение сразу всех элементов в контейнере.
 
-В `Column` тажке можно передать `verticalArrangement` – положение всего контента по вертикали (сверху, по центру или снизу). Если мы рисуем в `Column` два небольших элемента, `Column` занимает весь экран, и передан `verticalArrangement = Arrangement.Center`, то эти два элемента будут располагаться друг под другом по центру экрана.
+В `Column` также можно передать `verticalArrangement` – положение всего контента по вертикали (сверху, по центру или снизу). Если мы рисуем в `Column` два небольших элемента, `Column` занимает весь экран, и передан `verticalArrangement = Arrangement.Center`, то эти два элемента будут располагаться друг под другом по центру экрана.
 
 ### Row
 
@@ -66,7 +66,7 @@ Column, по аналогии с Box, разрешает нам настраив
 
 ## Списки
 
-[Lists.kt](app/src/main/java/com/example/compose_sample/layout/Lists.kt)
+[Lists.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/layout/Lists.kt)
 
 Для отображения небольших списков можно перебрать список данных с помощью `forEach`, и для каждого айтема отобразить на UI некоторый элемент.
 
@@ -97,7 +97,7 @@ Column, по аналогии с Box, разрешает нам настраив
 
 ## Другие лейауты
 
-[LayoutsPlus.kt](/app/src/main/java/com/example/compose_sample/layout/LayoutsPlus.kt)
+[LayoutsPlus.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/layout/LayoutsPlus.kt)
 
 - `FlowRow` – `Row`, располагающий контент на следующей строке, если в текущем закончилось место.
 
@@ -107,7 +107,7 @@ Column, по аналогии с Box, разрешает нам настраив
 
 ## Modifier
 
-[Modifiers.kt](/app/src/main/java/com/example/compose_sample/modifier/Modifiers.kt)
+[Modifiers.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/modifier/Modifiers.kt)
 
 Практически каждая Composable-функция принимает параметр `modifier: Modifier`. Он может как-либо модифицировать наш элемент. 
 
@@ -122,7 +122,7 @@ Modifier отвечает за:
 
 ### Sizes
 
-[ModifiersSizes.kt](/app/src/main/java/com/example/compose_sample/modifier/ModifierSizes.kt)
+[ModifiersSizes.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/modifier/ModifierSizes.kt)
 
 С помощью Modifier можно установить размеры элемента,
 
@@ -135,25 +135,25 @@ Modifier отвечает за:
 
 ### Внешний вид
 
-[ModifierAlpha.kt](/app/src/main/java/com/example/compose_sample/modifier/ModifierAlpha.kt)
+[ModifierAlpha.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/modifier/ModifierAlpha.kt)
 
 `Modifier.alpha()` позволяет настроить прозрачность компонента
 
-[ModifierBackground.kt](/app/src/main/java/com/example/compose_sample/modifier/ModifierBackground.kt)
+[ModifierBackground.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/modifier/ModifierBackground.kt)
 
 `Modifier.alpha()` позволяет нарисовать задний фон элемента.
 
-[ModifierClip.kt](/app/src/main/java/com/example/compose_sample/modifier/ModifierClip.kt)
+[ModifierClip.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/modifier/ModifierClip.kt)
 
 `Modifier.clip()` позволяет настроить форму элемента.
 
-[ModifierOrder.kt](/app/src/main/java/com/example/compose_sample/modifier/ModifierOrder.kt)
+[ModifierOrder.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/modifier/ModifierOrder.kt)
 
 Порядок применения Modifier-ов влияет на полученный результат. Например, если сначала применить `Modifier.background(Color.Red)`, а затем `Modifier.alpha(0.5f)`, то фон элемента все равно останется красным, без прозрачности.
 
 ### Доступность
 
-[ModifierSemantics.kt](/app/src/main/java/com/example/compose_sample/modifier/ModifierSemantics.kt)
+[ModifierSemantics.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/modifier/ModifierSemantics.kt)
 
 `Modifier.semantics` позволяет добавить больше информации об элементе. В первую очередь это информация нужна для режима talk back – озвучивания содержимого экрана.
 
@@ -169,17 +169,17 @@ Modifier отвечает за:
 
 Это можно сравнить с паттерном Observable-Observer – логика работы похожа, разве что в роли подписки на изменения выступает чтение `state.value`.
 
-[Пример с каунтером](/app/src/main/java/com/example/compose_sample/recomposition/Counter1.kt)
+[Пример с каунтером](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/recomposition/Counter1.kt)
 
 Для того, чтобы `MutableState` не пересоздался заново при рекомпозиции, он кешируется с помощью вызова функции `remember { ... }`.
 
 ### Пропускаемость
 
-[Рассмотрим второй пример](/app/src/main/java/com/example/compose_sample/recomposition/Counter2.kt)
+[Рассмотрим второй пример](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/recomposition/Counter2.kt)
 
 `AppText` в данном случае – просто обертка над `Text`, которая будет логировать каждый вызов.
 
-Если запустить этот пример и нажать на кноку, то увидим, что рекомпозиция функции `AppText` **вызвалась только для текста с числом**.
+Если запустить этот пример и нажать на кнопку, то увидим, что рекомпозиция функции `AppText` **вызвалась только для текста с числом**.
 
 На самом деле, когда мы собираем проект, в дело вступил **Compose compiler plugin** и сильно изменил наш код. В каждую функцию, помеченную аннотацией `@Composable` добавляется параметр `Composer`, а в начало функции был добавлен код, проверяющий, изменились ли параметры с прошлой композиции и позволяющий пропустить вызов функции.
 
@@ -228,11 +228,11 @@ Compose считает **нестабильными**:
 
 ### Примеры стабильных и нестабильных типов
 
-- [Types.kt](/app/src/main/java/com/example/compose_sample/stability/Types.kt)
+- [Types.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/stability/Types.kt)
 
-- [Types2.kt](/app/src/main/java/com/example/compose_sample/stability/Types2.kt)
+- [Types2.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/stability/Types2.kt)
 
-- [Types3.kt](/app/src/main/java/com/example/compose_sample/stability/Types3.kt)
+- [Types3.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/stability/Types3.kt)
 
 ### Immutable, Stable
 
@@ -245,7 +245,7 @@ Compose считает **нестабильными**:
 
 ### Default value
 
-[DefaultParameter.kt](/app/src/main/java/com/example/compose_sample/stability/DefaultParameter.kt)
+[DefaultParameter.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/stability/DefaultParameter.kt)
 
 Функция будет считаться пропускаемой, даже если среди ее параметров есть нестабильные типы данных, но все они имеют значение по умолчанию. Лучше никогда не используйте это. Исключение – ViewModel.
 
@@ -270,9 +270,9 @@ Compose считает **нестабильными**:
 
 Сохранение лямбд происходит автоматически, если внутри лямбды нет нестабильных параметров.
 
-[Пример с remember](/app/src/main/java/com/example/compose_sample/recomposition/Remember.kt)
+[Пример с remember](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/recomposition/Remember.kt)
 
-[Пример с remember с key](/app/src/main/java/com/example/compose_sample/recomposition/RememberWithKey.kt)
+[Пример с remember с key](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/recomposition/RememberWithKey.kt)
 
 ## Composition Local
 
@@ -284,7 +284,7 @@ Compose считает **нестабильными**:
 
 Разница между ними в том, что второй не будет вызывать рекомпозицию в месте чтения. (Да, рекомпозицию может вызывать чтение CompositionLocal, точно также, как и чтение State).
 
-[Простой пример с CompositionLocal](/app/src/main/java/com/example/compose_sample/compositionlocal/CompositionLocal.kt)
+[Простой пример с CompositionLocal](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/compositionlocal/CompositionLocal.kt)
 
 С помощью `CompositionLocalProvider` можно переопределить значение, возвращаемое через CompositionLocal.
 
@@ -318,7 +318,7 @@ fun App() {
 }
 ```
 
-[Полный пример](/app/src/main/java/com/example/compose_sample/compositionlocal/ds)
+[Полный пример](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/compositionlocal/ds)
 
 В AppTheme есть два метода, помеченные аннотацией `@ReadOnlyComposable`. Эта аннотация обозначает, что функция ничего не рисует на экране, поэтому compose compiler не будет оборачивать ее содержимое в группу – небольшая оптимизация.
 
@@ -338,7 +338,7 @@ fun App() {
 
 Примеры: Scaffold, Button
 
-[Пример экрана с MaterialDesign](/app/src/main/java/com/example/compose_sample/material/MaterialTheme.kt)
+[Пример экрана с MaterialDesign](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/material/MaterialTheme.kt)
 
 ## Side Effect
 
@@ -354,7 +354,7 @@ fun App() {
 
 ### SideEffect
 
-[SideEffect.kt](/app/src/main/java/com/example/compose_sample/side/SideEffect.kt)
+[SideEffect.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/side/SideEffect.kt)
 
 Код, обернутый в SideEffect, будет выполняться после каждой композиции.
 
@@ -365,7 +365,7 @@ fun App() {
 ### LaunchedEffect
 
 
-[LaunchedEffect.kt](/app/src/main/java/com/example/compose_sample/side/LaunchedEffect.kt)
+[LaunchedEffect.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/side/LaunchedEffect.kt)
 
 **LaunchedEffect** выполняет переданный эффект в отдельном coroutine scope.
 
@@ -375,7 +375,7 @@ fun App() {
 
 ### DisposableEffect
 
-[DisposableEffect.kt](/app/src/main/java/com/example/compose_sample/side/DisposableEffect.kt)
+[DisposableEffect.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/side/DisposableEffect.kt)
 
 **DisposableEffect** выполняет переданный эффект с возможностью определить действия на событие уничтожения композиции.
 
@@ -389,7 +389,7 @@ fun App() {
 
 Для этого в xml следует добавить ComposeView:
 
-[activity_main.xml](/app/src/main/res/layout/activity_main.xml)
+[activity_main.xml](/lection%2004/lection_04/app/src/main/res/layout/activity_main.xml)
 
 ```xml
 <androidx.compose.ui.platform.ComposeView
@@ -400,11 +400,11 @@ fun App() {
 
 И затем в коде вызвать `setContent`
 
-[MainActivity.kt](/app/src/main/java/com/example/compose_sample/MainActivity.kt)
+[MainActivity.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/MainActivity.kt)
 
 Также мы можем добавить AndroidView в Compose.
 
-[AndroidViewInCompose.kt](/app/src/main/java/com/example/compose_sample/composeview/AndroidViewInCompose.kt)
+[AndroidViewInCompose.kt](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/composeview/AndroidViewInCompose.kt)
 
 ## Навигация
 
@@ -446,7 +446,7 @@ fun App() {
 
 Это простейшая реализация, не поддерживающая многое. Но все библиотеки в целом работают на подобном принципе.
 
-[Полный пример](/app/src/main/java/com/example/compose_sample/navigation/SimpleNavigation.kt)
+[Полный пример](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/navigation/SimpleNavigation.kt)
 
 ### navigation-compose
 
@@ -507,7 +507,7 @@ fun NavigationComposeApp() {
 }
 ```
 
-[Полный пример](/app/src/main/java/com/example/compose_sample/navigation/navcompose/NavigationCompose.kt)
+[Полный пример](/lection%2004/lection_04/app/src/main/java/com/example/compose_sample/navigation/navcompose/NavigationCompose.kt)
 
 navigation-compose – большая тема для обсуждения. Тут есть и передача параметров между экранами, и вложенная навигация, и поддержка диплинков. Рекомендую ознакомится со статьей из дополнительных материалов.
 
