@@ -1,0 +1,3 @@
+[submodule "lection05_compose_advanced/code"]
+	path = lection05_compose_advanced/code
+	url = git@github.com:AndVl1/compose-advanced.git
