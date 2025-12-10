@@ -1,0 +1,31 @@
+[versions]
+agp = "8.7.2"
+androidxMedia3Media3ExoplayerHls = "1.4.1"
+kotlin = "1.9.24"
+coreKtx = "1.12.0"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+appcompat = "1.6.1"
+material = "1.10.0"
+media = "1.7.0"
+media3Session = "1.2.0"
+workRuntimeKtx = "2.9.0"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "androidxMedia3Media3ExoplayerHls" }
+androidx-media3-media3-exoplayer-hls4 = { module = "androidx.media3:media3-exoplayer-hls", version.ref = "androidxMedia3Media3ExoplayerHls" }
+androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
+androidx-media3-session = { module = "androidx.media3:media3-session", version.ref = "media3Session" }
+androidx-media = { module = "androidx.media:media", version.ref = "media" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
