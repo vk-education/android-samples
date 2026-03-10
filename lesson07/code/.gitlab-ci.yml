@@ -1,0 +1,55 @@
+image: mingc/android-build-box:latest
+
+stages:
+  - check    # Проверка кода (Lint)
+  - test     # Юнит-тесты
+  - build    # Сборка APK
+  - notify   # Отправка в Telegram
+
+before_script:
+  - chmod +x ./gradlew
+
+lint_job:
+  stage: check
+  script:
+    - ./gradlew lintDebug
+
+unit_test_job:
+  stage: test
+  script:
+    - ./gradlew testDebugUnitTest
+
+build_apk_job:
+  stage: build
+  script:
+    - ./gradlew assembleDebug
+  artifacts:
+    paths:
+      - app/build/outputs/apk/debug/app-debug.apk
+    expire_in: 1 day
+
+
+telegram_success_job:
+  stage: notify
+  image: curlimages/curl:latest
+  before_script: []
+  dependencies:
+    - build_apk_job
+  script:
+    - >
+      curl -F document=@"app/build/outputs/apk/debug/app-debug.apk" 
+      -F caption="✅ Новая сборка успешно готова! Коммит: $CI_COMMIT_MESSAGE" 
+      "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendDocument?chat_id=$TELEGRAM_CHAT_ID"
+
+telegram_failure_job:
+  stage: notify
+  image: curlimages/curl:latest
+  before_script: []
+  when: on_failure
+  script:
+    - >
+      curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" 
+      -d chat_id="$TELEGRAM_CHAT_ID" 
+      -d text="❌ Ошибка CI/CD пайплайна!
+      Коммит: $CI_COMMIT_MESSAGE
+      Подробности и логи: $CI_PIPELINE_URL"
