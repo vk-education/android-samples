@@ -13,7 +13,7 @@ fun main() = runBlocking {
     try {
         val job = GlobalScope.launch {
             println("Throwing exception from launch")
-            throw IndexOutOfBoundsException() // креш в Android / вывод в stderr на jvm
+//            throw IndexOutOfBoundsException() // креш в Android / вывод в stderr на jvm
         }
         job.join()
         println("Job joined")

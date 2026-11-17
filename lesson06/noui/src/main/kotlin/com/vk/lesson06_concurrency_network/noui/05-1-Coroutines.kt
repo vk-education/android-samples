@@ -19,15 +19,17 @@ fun main() = runBlocking {
 
     val result: Deferred<String> = async {
         println("Async job launched [${Thread.currentThread().name}]")
-        delay(1500L)
+        delay(5500L)
         println("Async job done [${Thread.currentThread().name}]")
         "Result"
     }
 
-    println("Before join [${Thread.currentThread().name}]")
-    job.join()
+    println("Start await result [${Thread.currentThread().name}]")
+
     println("Before await [${Thread.currentThread().name}]")
-//    result.cancel()
+
+    result.cancel()
+
     try {
         println(result.await())
     } catch (e: CancellationException) {

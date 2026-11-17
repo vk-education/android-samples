@@ -5,13 +5,13 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlin.random.Random
 
 private val mutableStateFlow = MutableStateFlow("default")
-val stateFlow: StateFlow<String> = mutableStateFlow
-
+val stateFlow: StateFlow<String> = mutableStateFlow.asStateFlow()
 
 @OptIn(DelicateCoroutinesApi::class)
 fun main() {

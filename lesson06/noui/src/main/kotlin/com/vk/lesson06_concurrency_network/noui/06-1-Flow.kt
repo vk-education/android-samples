@@ -12,6 +12,7 @@ import kotlin.random.Random
 
 fun main(): Unit = runBlocking {
     val flow = flow<Int> {
+        println("Flow started")
         emit(Random.nextInt(10))
         delay(1000L)
         emit(Random.nextInt(10))
@@ -21,14 +22,15 @@ fun main(): Unit = runBlocking {
         emit(Random.nextInt(10))
         delay(1000L)
         emit(Random.nextInt(10))
+        println("Flow ended")
     }
     println("Flow created")
     delay(1000L)
     println("Subscribe to flow")
 
     launch {
-        flow.collect {
-            println("(1) Value received: $it")
+        flow.collect { flowValue ->
+            println("(1) Value received: $flowValue")
         }
     }
 

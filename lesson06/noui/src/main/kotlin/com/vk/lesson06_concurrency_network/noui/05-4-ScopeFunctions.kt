@@ -18,7 +18,7 @@ suspend fun someFun() {
     withContext(Dispatchers.IO) {
         println("[${Thread.currentThread().name}] Start in IO")
         delay(1000)
-        throw IllegalStateException("Bah")
+//        throw IllegalStateException("Bah")
         println("Finish in IO")
     }
     println("[${Thread.currentThread().name}] Finish someFun")

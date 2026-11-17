@@ -12,7 +12,7 @@ fun main() = runBlocking {
     }
 
     val api = Api()
-    val user = api.fetchUser()
+    val user = api.fetchUserNoSuspend()
     show(user)
 }
 
